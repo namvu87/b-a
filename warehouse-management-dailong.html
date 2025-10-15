@@ -1495,6 +1495,2269 @@
             </div>
         </div>
         
+        <!-- Inventory Location Tab -->
+        <div class="tab-content" id="inventory-location">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Tồn kho theo Vị trí</h1>
+                    <div class="breadcrumb">Quản lý Tồn kho / Tồn kho theo vị trí</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-secondary">
+                        🗺️ Xem sơ đồ kho
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã vị trí, dãy, kệ...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHRM-01">ZN-WHRM-01 (NVL)</option>
+                            <option value="ZN-WHSP-01">ZN-WHSP-01 (Vật tư)</option>
+                            <option value="ZN-WHFG-01">ZN-WHFG-01 (Thành phẩm)</option>
+                        </select>
+                        <select class="form-select" style="width: 150px;">
+                            <option value="">Tất cả dãy</option>
+                            <option value="A">Dãy A</option>
+                            <option value="B">Dãy B</option>
+                            <option value="C">Dãy C</option>
+                            <option value="D">Dãy D</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Mã vị trí</th>
+                            <th style="width: 120px;">Dãy - Kệ</th>
+                            <th style="width: 80px;">Tầng</th>
+                            <th style="width: 200px;">Mã hàng</th>
+                            <th style="width: 250px;">Tên hàng</th>
+                            <th style="width: 120px;">Lot/Batch</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 120px;">HSD</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-D01-03-02</strong></td>
+                            <td>D01 - Kệ 03</td>
+                            <td style="text-align: center;">Tầng 2</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td>20251006</td>
+                            <td style="text-align: right; font-weight: 500;">500 kg</td>
+                            <td>06/10/2026</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-D01-04-01</strong></td>
+                            <td>D01 - Kệ 04</td>
+                            <td style="text-align: center;">Tầng 1</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td>20251010</td>
+                            <td style="text-align: right; font-weight: 500;">750 kg</td>
+                            <td>10/10/2026</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHSP-01-A01-02-01</strong></td>
+                            <td>A01 - Kệ 02</td>
+                            <td style="text-align: center;">Tầng 1</td>
+                            <td><span class="doc-code">PKG1_bao500</span></td>
+                            <td>Bao 500g in logo</td>
+                            <td>-</td>
+                            <td style="text-align: right; font-weight: 500;">5,000 cái</td>
+                            <td>-</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-C02-01-01</strong></td>
+                            <td>C02 - Kệ 01</td>
+                            <td style="text-align: center;">Tầng 1</td>
+                            <td><span class="doc-code">PROT_thit01</span></td>
+                            <td>Thịt heo xay</td>
+                            <td>20251012</td>
+                            <td style="text-align: right; font-weight: 500;">320 kg</td>
+                            <td>12/11/2025</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr style="background: #fff3cd;">
+                            <td><strong>ZN-WHRM-01-QC-HOLD</strong></td>
+                            <td>Khu QC</td>
+                            <td style="text-align: center;">-</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td>20251014</td>
+                            <td style="text-align: right; font-weight: 500;">500 kg</td>
+                            <td>14/10/2026</td>
+                            <td><span class="status-badge wait">🟡 Chờ QC</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Inventory Lot Tab -->
+        <div class="tab-content" id="inventory-lot">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Tồn kho theo Lot/Batch</h1>
+                    <div class="breadcrumb">Quản lý Tồn kho / Tồn kho theo Lot/Batch</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-secondary">
+                        ⚠️ Cảnh báo FEFO
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã hàng, lot, NCC...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHRM-01">ZN-WHRM-01 (NVL)</option>
+                            <option value="ZN-WHFG-01">ZN-WHFG-01 (Thành phẩm)</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Gần hết hạn</button>
+                        <button class="filter-btn">Quá hạn</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Mã hàng</th>
+                            <th style="width: 220px;">Tên hàng</th>
+                            <th style="width: 140px;">Lot/Batch</th>
+                            <th style="width: 100px;">NSX</th>
+                            <th style="width: 100px;">HSD</th>
+                            <th style="width: 100px;">Còn lại (ngày)</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 180px;">Vị trí</th>
+                            <th style="width: 140px;">NCC</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td><strong>20251006</strong></td>
+                            <td>06/10/2025</td>
+                            <td>06/10/2026</td>
+                            <td style="text-align: right; color: #27ae60;">357 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">500 kg</td>
+                            <td>ZN-WHRM-01-D01-03-02</td>
+                            <td>NCC Đại Phát</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td><strong>20251010</strong></td>
+                            <td>10/10/2025</td>
+                            <td>10/10/2026</td>
+                            <td style="text-align: right; color: #27ae60;">361 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">750 kg</td>
+                            <td>ZN-WHRM-01-D01-04-01</td>
+                            <td>NCC Đại Phát</td>
+                            <td><span class="status-badge success">🟢 Sẵn sàng</span></td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td><span class="doc-code">PROT_thit01</span></td>
+                            <td>Thịt heo xay</td>
+                            <td><strong>20251012</strong></td>
+                            <td>12/10/2025</td>
+                            <td>12/11/2025</td>
+                            <td style="text-align: right; color: #f39c12;">28 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">320 kg</td>
+                            <td>ZN-WHRM-01-C02-01-01</td>
+                            <td>NCC Thực phẩm An Khang</td>
+                            <td><span class="status-badge warning">🟠 Gần hết hạn</span></td>
+                        </tr>
+                        <tr style="background: #ffebee;">
+                            <td><span class="doc-code">SPIC_gia03</span></td>
+                            <td>Nước mắm 500ml</td>
+                            <td><strong>20240920</strong></td>
+                            <td>20/09/2024</td>
+                            <td>20/09/2025</td>
+                            <td style="text-align: right; color: #dc3545; font-weight: 600;">-25 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">15 chai</td>
+                            <td>ZN-WHRM-01-QUARANTINE</td>
+                            <td>NCC Gia vị VN</td>
+                            <td><span class="status-badge danger">🔴 Quá hạn</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; padding: 16px; background: #fff3e0; border-left: 4px solid #f39c12; border-radius: 4px;">
+                    <strong>⚠️ CẢNH BÁO FEFO:</strong>
+                    <div style="margin-top: 8px; font-size: 13px;">
+                        • <strong>1 lô quá hạn</strong> cần xử lý ngay (SPIC_gia03)<br>
+                        • <strong>1 lô gần hết hạn</strong> trong 30 ngày (PROT_thit01) - Ưu tiên xuất trước
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- KPI Tab -->
+        <div class="tab-content" id="kpi">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">KPI & Hiệu suất Kho</h1>
+                    <div class="breadcrumb">Dashboard / KPI & Hiệu suất</div>
+                </div>
+                <div class="header-actions">
+                    <select class="form-select" style="width: 150px;">
+                        <option value="month">Tháng này</option>
+                        <option value="quarter">Quý này</option>
+                        <option value="year">Năm nay</option>
+                    </select>
+                    <button class="btn-secondary">
+                        📊 Xuất báo cáo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <span class="stat-title">Độ chính xác tồn kho</span>
+                        <div class="stat-icon blue">✅</div>
+                    </div>
+                    <div class="stat-value">99.2%</div>
+                    <div class="stat-change up">🎯 Target: ≥ 99.5%</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                        <div style="background: #e3f2fd; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: #2196F3; width: 99.2%; height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <span class="stat-title">Tỷ lệ OTIF</span>
+                        <div class="stat-icon green">🚚</div>
+                    </div>
+                    <div class="stat-value">96.5%</div>
+                    <div class="stat-change up">↑ 2% so với tháng trước</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                        <div style="background: #e8f5e9; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: #27ae60; width: 96.5%; height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <span class="stat-title">Tuân thủ FEFO</span>
+                        <div class="stat-icon orange">📋</div>
+                    </div>
+                    <div class="stat-value">98.1%</div>
+                    <div class="stat-change up">🎯 Target: ≥ 98%</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                        <div style="background: #fff3e0; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: #f39c12; width: 98.1%; height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card red">
+                    <div class="stat-header">
+                        <span class="stat-title">Tỷ lệ hư hỏng/mất mát</span>
+                        <div class="stat-icon red">📉</div>
+                    </div>
+                    <div class="stat-value">0.25%</div>
+                    <div class="stat-change up">🎯 Target: ≤ 0.3%</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                        <div style="background: #ffebee; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: #dc3545; width: 83%; height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Chi tiết KPI theo nhóm</div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 300px;">Chỉ tiêu KPI</th>
+                            <th style="width: 120px;">Thực tế</th>
+                            <th style="width: 120px;">Mục tiêu</th>
+                            <th style="width: 120px;">% Đạt</th>
+                            <th style="width: 120px;">Xu hướng</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. ĐỘ CHÍNH XÁC & CHẤT LƯỢNG</strong></td>
+                            <td colspan="6" style="background: #f9f9f9;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Độ chính xác tồn kho</td>
+                            <td style="text-align: right;">99.2%</td>
+                            <td style="text-align: right;">≥ 99.5%</td>
+                            <td style="text-align: right;">99.7%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 0.5%</td>
+                            <td><span class="status-badge warning">🟡 Gần đạt</span></td>
+                            <td>Cần cải thiện thêm 0.3%</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Tuân thủ FEFO/FIFO</td>
+                            <td style="text-align: right;">98.1%</td>
+                            <td style="text-align: right;">≥ 98%</td>
+                            <td style="text-align: right;">100.1%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 1.2%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Duy trì tốt</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Tỷ lệ hàng hư hỏng</td>
+                            <td style="text-align: right;">0.25%</td>
+                            <td style="text-align: right;">≤ 0.3%</td>
+                            <td style="text-align: right;">83.3%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.05%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Tốt hơn mục tiêu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. HIỆU SUẤT VẬN HÀNH</strong></td>
+                            <td colspan="6" style="background: #f9f9f9;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Tỷ lệ đáp ứng đơn hàng (Order Fill Rate)</td>
+                            <td style="text-align: right;">96.5%</td>
+                            <td style="text-align: right;">≥ 95%</td>
+                            <td style="text-align: right;">101.6%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 2%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Vượt mục tiêu</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Tỷ lệ OTIF (On-Time In-Full)</td>
+                            <td style="text-align: right;">96.5%</td>
+                            <td style="text-align: right;">≥ 95%</td>
+                            <td style="text-align: right;">101.6%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 2%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Giao hàng đúng hạn</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Tỷ lệ sử dụng diện tích kho</td>
+                            <td style="text-align: right;">78%</td>
+                            <td style="text-align: right;">75-85%</td>
+                            <td style="text-align: right;">92%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 3%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Trong vùng tối ưu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. THỜI GIAN XỬ LÝ</strong></td>
+                            <td colspan="6" style="background: #f9f9f9;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Thời gian xử lý nhập kho</td>
+                            <td style="text-align: right;">1.2 giờ</td>
+                            <td style="text-align: right;">≤ 2 giờ</td>
+                            <td style="text-align: right;">60%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.3h</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Nhanh hơn mục tiêu</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Thời gian xử lý xuất kho</td>
+                            <td style="text-align: right;">1.8 giờ</td>
+                            <td style="text-align: right;">≤ 2 giờ</td>
+                            <td style="text-align: right;">90%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.2h</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>Đạt mục tiêu</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 24px;">Thời gian QC trung bình</td>
+                            <td style="text-align: right;">2.5 giờ</td>
+                            <td style="text-align: right;">≤ 4 giờ</td>
+                            <td style="text-align: right;">62.5%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.5h</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                            <td>QC nhanh chóng</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Đề xuất cải thiện</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="padding: 16px; background: #fff3e0; border-left: 4px solid #f39c12; border-radius: 4px;">
+                        <strong>⚠️ Cần chú ý:</strong>
+                        <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 13px;">
+                            <li>Độ chính xác tồn kho (99.2%) cần cải thiện thêm 0.3% để đạt mục tiêu</li>
+                            <li>Đề xuất: Tăng tần suất cycle count lên 2 lần/tuần</li>
+                        </ul>
+                    </div>
+                    <div style="padding: 16px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 4px;">
+                        <strong>✅ Điểm mạnh:</strong>
+                        <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 13px;">
+                            <li>Tỷ lệ OTIF vượt mục tiêu 1.5%</li>
+                            <li>Tuân thủ FEFO/FIFO duy trì tốt ở mức 98.1%</li>
+                            <li>Thời gian xử lý nhập/xuất kho đều nhanh hơn mục tiêu</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Receipt from Production Tab -->
+        <div class="tab-content" id="receipt-sx">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Nhập Thành phẩm từ Sản xuất</h1>
+                    <div class="breadcrumb">Nhập kho / Nhập TP từ Sản xuất</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-add" onclick="$('#receiptProductionModal').addClass('active')">
+                        + Tạo phiếu nhập TP
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="info-box">
+                    <strong>📌 Quy trình:</strong> PH-SXU thông báo có lô TP → Kiểm đếm TAY BA tại xưởng → Ký Biên bản Bàn giao → TO-KHO lập Phiếu Nhập kho
+                </div>
+                
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số phiếu, mã hàng, lot...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">Hôm nay</button>
+                        <button class="filter-btn">Tuần này</button>
+                        <button class="filter-btn">Tháng này</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số phiếu</th>
+                            <th style="width: 110px;">Ngày nhập</th>
+                            <th style="width: 180px;">Mã TP</th>
+                            <th style="width: 200px;">Tên thành phẩm</th>
+                            <th style="width: 140px;">Lot/Batch</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 120px;">Kho nhận</th>
+                            <th style="width: 140px;">Người giao (SX)</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">PN-SX-2025-0125</span></td>
+                            <td>14/10/2025</td>
+                            <td><strong>FG_banhgao100</strong></td>
+                            <td>Bánh gạo 100g (gói)</td>
+                            <td>20251014-01</td>
+                            <td style="text-align: right;">2,000 gói</td>
+                            <td>ZN-WHFG-01</td>
+                            <td>Nguyễn Văn C (PH-SXU)</td>
+                            <td><span class="status-badge success">ĐÃ NHẬP</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">PN-SX-2025-0124</span></td>
+                            <td>13/10/2025</td>
+                            <td><strong>FG_banhgao500</strong></td>
+                            <td>Bánh gạo 500g (gói)</td>
+                            <td>20251013-02</td>
+                            <td style="text-align: right;">800 gói</td>
+                            <td>ZN-WHFG-01</td>
+                            <td>Trần Thị D (PH-SXU)</td>
+                            <td><span class="status-badge success">ĐÃ NHẬP</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Receipt Other Tab -->
+        <div class="tab-content" id="receipt-other">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Nhập kho Khác</h1>
+                    <div class="breadcrumb">Nhập kho / Nhập khác</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-add" onclick="$('#receiptOtherModal').addClass('active')">
+                        + Tạo phiếu nhập khác
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="info-box">
+                    <strong>📌 Nhập khác:</strong> Nhập chuyển kho, Nhập trả từ khách hàng, Nhập điều chỉnh tồn kho, Nhập bảo hành...
+                </div>
+                
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số phiếu, lý do...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả loại</option>
+                            <option value="transfer">Chuyển kho</option>
+                            <option value="return">Trả từ KH</option>
+                            <option value="adjust">Điều chỉnh</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số phiếu</th>
+                            <th style="width: 110px;">Ngày nhập</th>
+                            <th style="width: 150px;">Loại nhập</th>
+                            <th style="width: 200px;">Mã hàng</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 120px;">Kho nhận</th>
+                            <th style="width: 180px;">Nguồn/Lý do</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">PN-TR-2025-0045</span></td>
+                            <td>12/10/2025</td>
+                            <td>Chuyển kho</td>
+                            <td>PKG1_bao500</td>
+                            <td style="text-align: right;">1,000 cái</td>
+                            <td>ZN-WHSP-01</td>
+                            <td>Từ ZN-WHDC-01</td>
+                            <td><span class="status-badge success">ĐÃ NHẬP</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">PN-RT-2025-0012</span></td>
+                            <td>10/10/2025</td>
+                            <td>Trả từ KH</td>
+                            <td>FG_banhgao100</td>
+                            <td style="text-align: right;">50 gói</td>
+                            <td>ZN-WHFG-01</td>
+                            <td>KH trả lại - Lỗi in</td>
+                            <td><span class="status-badge warning">CHỜ KIỂM TRA</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Issue for Sale Tab -->
+        <div class="tab-content" id="issue-sale">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Xuất Thành phẩm Bán hàng</h1>
+                    <div class="breadcrumb">Xuất kho / Xuất TP bán hàng</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-add" onclick="$('#issueSaleModal').addClass('active')">
+                        + Tạo phiếu xuất bán hàng
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="info-box">
+                    <strong>📌 Quy trình:</strong> PH-KDO gửi YCGH → TO-GNH kiểm tra tồn kho → Lập phiếu xuất → Giao hàng → Bàn giao có ký nhận
+                </div>
+                
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số phiếu, đơn hàng, khách hàng...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHDC-01">ZN-WHDC-01 (TTPP)</option>
+                            <option value="ZN-WHSR-01">ZN-WHSR-01 (Showroom)</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Chờ giao</button>
+                        <button class="filter-btn">Đã giao</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số phiếu</th>
+                            <th style="width: 110px;">Ngày xuất</th>
+                            <th style="width: 140px;">Số đơn hàng</th>
+                            <th style="width: 200px;">Khách hàng</th>
+                            <th style="width: 100px;">Tổng SL</th>
+                            <th style="width: 120px;">Kho xuất</th>
+                            <th style="width: 150px;">Người giao nhận</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">PX-BH-2025-0458</span></td>
+                            <td>14/10/2025</td>
+                            <td>DH-2025-1258</td>
+                            <td>NPP Hà Nội</td>
+                            <td style="text-align: right;">5,000 gói</td>
+                            <td>ZN-WHDC-01</td>
+                            <td>Nguyễn Văn E (TO-GNH)</td>
+                            <td><span class="status-badge processing">ĐANG GIAO</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Theo dõi">🚚</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">PX-BH-2025-0457</span></td>
+                            <td>13/10/2025</td>
+                            <td>DH-2025-1245</td>
+                            <td>Siêu thị BigC</td>
+                            <td style="text-align: right;">3,200 gói</td>
+                            <td>ZN-WHDC-01</td>
+                            <td>Trần Văn F (TO-GNH)</td>
+                            <td><span class="status-badge success">ĐÃ GIAO</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Issue Transfer Tab -->
+        <div class="tab-content" id="issue-transfer">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Xuất Chuyển kho</h1>
+                    <div class="breadcrumb">Xuất kho / Xuất chuyển kho</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-add" onclick="$('#issueTransferModal').addClass('active')">
+                        + Tạo phiếu chuyển kho
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="info-box">
+                    <strong>📌 Quy trình:</strong> Kho A xuất → Kho B nhập → Kiểm đếm tay ba → Xác nhận cả 2 đầu
+                </div>
+                
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số phiếu, mã hàng...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Chờ xác nhận</button>
+                        <button class="filter-btn">Hoàn thành</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số phiếu</th>
+                            <th style="width: 110px;">Ngày chuyển</th>
+                            <th style="width: 120px;">Kho xuất</th>
+                            <th style="width: 120px;">Kho nhận</th>
+                            <th style="width: 180px;">Mã hàng</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 150px;">Người vận chuyển</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">PX-CK-2025-0078</span></td>
+                            <td>14/10/2025</td>
+                            <td>ZN-WHFG-01</td>
+                            <td>ZN-WHDC-01</td>
+                            <td>FG_banhgao100</td>
+                            <td style="text-align: right;">10,000 gói</td>
+                            <td>Lê Văn G</td>
+                            <td><span class="status-badge processing">ĐANG CHUYỂN</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Xác nhận">✓</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">PX-CK-2025-0077</span></td>
+                            <td>12/10/2025</td>
+                            <td>ZN-WHDC-01</td>
+                            <td>ZN-WHSR-01</td>
+                            <td>FG_banhgao500</td>
+                            <td style="text-align: right;">500 gói</td>
+                            <td>Phạm Văn H</td>
+                            <td><span class="status-badge success">HOÀN THÀNH</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Material Request List Tab -->
+        <div class="tab-content" id="request-list">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Danh sách Yêu cầu Vật tư</h1>
+                    <div class="breadcrumb">Yêu cầu Vật tư / Danh sách YCVT</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-add" onclick="$('#requestCreateModal').addClass('active')">
+                        + Tạo YCVT mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số YCVT, người yêu cầu...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả bộ phận</option>
+                            <option value="PH-SXU">PH-SXU (Sản xuất)</option>
+                            <option value="PH-KDO">PH-KDO (Kinh doanh)</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Chờ duyệt</button>
+                        <button class="filter-btn">Đang chuẩn bị</button>
+                        <button class="filter-btn">Hoàn thành</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số YCVT</th>
+                            <th style="width: 110px;">Ngày tạo</th>
+                            <th style="width: 110px;">Ngày cần</th>
+                            <th style="width: 150px;">Bộ phận yêu cầu</th>
+                            <th style="width: 150px;">Người yêu cầu</th>
+                            <th style="width: 100px;">Số mặt hàng</th>
+                            <th style="width: 150px;">Mục đích</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">YCVT-2025-0156</span></td>
+                            <td>14/10/2025</td>
+                            <td>14/10/2025</td>
+                            <td>PH-SXU</td>
+                            <td>Nguyễn Văn C</td>
+                            <td style="text-align: center;">5 mặt hàng</td>
+                            <td>Sản xuất lô bánh gạo</td>
+                            <td><span class="status-badge processing">ĐANG CHUẨN BỊ</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Xử lý">⚡</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">YCVT-2025-0155</span></td>
+                            <td>13/10/2025</td>
+                            <td>14/10/2025</td>
+                            <td>PH-SXU</td>
+                            <td>Trần Thị D</td>
+                            <td style="text-align: center;">3 mặt hàng</td>
+                            <td>Bao bì đóng gói</td>
+                            <td><span class="status-badge wait">CHỜ DUYỆT</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Duyệt">✓</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">YCVT-2025-0154</span></td>
+                            <td>12/10/2025</td>
+                            <td>13/10/2025</td>
+                            <td>PH-SXU</td>
+                            <td>Lê Văn E</td>
+                            <td style="text-align: center;">8 mặt hàng</td>
+                            <td>Nguyên liệu sản xuất</td>
+                            <td><span class="status-badge success">ĐÃ XUẤT</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Material Request Create Tab -->
+        <div class="tab-content" id="request-create">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Tạo Yêu cầu Vật tư Mới</h1>
+                    <div class="breadcrumb">Yêu cầu Vật tư / Tạo YCVT mới</div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <form id="requestCreateForm">
+                    <div class="section-title">Thông tin chung</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Bộ phận yêu cầu <span class="required">*</span></label>
+                            <select class="form-select" required>
+                                <option value="">Chọn bộ phận</option>
+                                <option value="PH-SXU" selected>PH-SXU - Phòng Sản xuất</option>
+                                <option value="PH-KDO">PH-KDO - Phòng Kinh doanh</option>
+                                <option value="PH-KTC">PH-KTC - Phòng Kỹ thuật</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Người yêu cầu <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="Nguyễn Văn A" disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Ngày cần <span class="required">*</span></label>
+                            <input type="date" class="form-input" value="2025-10-14" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Độ ưu tiên</label>
+                            <select class="form-select">
+                                <option value="normal" selected>Bình thường</option>
+                                <option value="high">Cao</option>
+                                <option value="urgent">Khẩn cấp</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label class="form-label">Mục đích sử dụng <span class="required">*</span></label>
+                            <textarea class="form-input" rows="2" placeholder="Nhập mục đích sử dụng vật tư..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title" style="margin-top: 24px;">Chi tiết vật tư yêu cầu</div>
+                    
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">STT</th>
+                                <th style="width: 180px;">Mã hàng</th>
+                                <th style="width: 250px;">Tên hàng</th>
+                                <th style="width: 100px;">Số lượng</th>
+                                <th style="width: 80px;">ĐVT</th>
+                                <th style="width: 120px;">Tồn khả dụng</th>
+                                <th>Ghi chú</th>
+                                <th style="width: 60px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestDetailBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #999; padding: 20px;">
+                                    Chưa có dữ liệu. Nhấn "Thêm dòng" để thêm vật tư.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn-add-row" onclick="addRequestDetailRow()">
+                        + Thêm dòng
+                    </button>
+                    
+                    <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
+                        <button type="button" class="btn-cancel">Hủy</button>
+                        <button type="button" class="btn-save">Lưu nháp</button>
+                        <button type="button" class="btn-save">Gửi yêu cầu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- QC History Tab -->
+        <div class="tab-content" id="qc-history">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Lịch sử Kiểm tra QC</h1>
+                    <div class="breadcrumb">Kiểm tra QC / Lịch sử QC</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-secondary">
+                        📊 Thống kê
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số phiếu, mã hàng, NCC...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 150px;">
+                            <option value="">Tất cả NCC</option>
+                            <option value="NCC001">NCC Đại Phát</option>
+                            <option value="NCC002">NCC Gia vị VN</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Đạt</button>
+                        <button class="filter-btn">Không đạt</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số phiếu QC</th>
+                            <th style="width: 110px;">Ngày kiểm tra</th>
+                            <th style="width: 140px;">Số phiếu nhập</th>
+                            <th style="width: 180px;">Mã hàng</th>
+                            <th style="width: 140px;">Lot/Batch</th>
+                            <th style="width: 150px;">NCC</th>
+                            <th style="width: 150px;">Người kiểm tra</th>
+                            <th style="width: 120px;">Kết quả</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">QC-2025-0092</span></td>
+                            <td>14/10/2025</td>
+                            <td>PN-2025-0892</td>
+                            <td>MAIN_gao01</td>
+                            <td>20251014</td>
+                            <td>NCC Đại Phát</td>
+                            <td>Phạm Thị D (TO-QAC)</td>
+                            <td><span class="status-badge success">✅ ĐẠT</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem chi tiết">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="background: #ffebee;">
+                            <td><span class="doc-code">QC-2025-0091</span></td>
+                            <td>13/10/2025</td>
+                            <td>PN-2025-0890</td>
+                            <td>PKG1_bao500</td>
+                            <td>20251013</td>
+                            <td>NCC Bao bì Việt</td>
+                            <td>Hoàng Văn E (TO-QAC)</td>
+                            <td><span class="status-badge danger">❌ KHÔNG ĐẠT</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem chi tiết">👁️</button>
+                                    <button class="btn-edit" title="SPKPH">⚠️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">QC-2025-0090</span></td>
+                            <td>12/10/2025</td>
+                            <td>PN-2025-0888</td>
+                            <td>SPIC_gia02</td>
+                            <td>20251012</td>
+                            <td>NCC Gia vị VN</td>
+                            <td>Phạm Thị D (TO-QAC)</td>
+                            <td><span class="status-badge success">✅ ĐẠT</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem chi tiết">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; padding: 16px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 4px;">
+                    <strong>📊 Thống kê tháng này:</strong>
+                    <div style="margin-top: 8px; font-size: 13px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                        <div>• Tổng số lô kiểm tra: <strong>45 lô</strong></div>
+                        <div style="color: #27ae60;">• Đạt: <strong>42 lô (93.3%)</strong></div>
+                        <div style="color: #dc3545;">• Không đạt: <strong>3 lô (6.7%)</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SPKPH Tab -->
+        <div class="tab-content" id="spkph">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">SPKPH - Sản phẩm Không Phù Hợp</h1>
+                    <div class="breadcrumb">Kiểm tra QC / SPKPH</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-add" onclick="alert('Tạo SPKPH mới')">
+                        + Tạo SPKPH mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="info-box">
+                    <strong>📌 SPKPH:</strong> Hàng QC không đạt → Cách ly → Lập báo cáo SPKPH → Thương lượng NCC → Xử lý (Trả hàng / Đổi hàng / Giảm giá chấp nhận / Tiêu hủy)
+                </div>
+                
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo số SPKPH, mã hàng, NCC...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Chờ xử lý</button>
+                        <button class="filter-btn">Đã xử lý</button>
+                        <button class="filter-btn">Đã đóng</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Số SPKPH</th>
+                            <th style="width: 110px;">Ngày lập</th>
+                            <th style="width: 140px;">Số phiếu nhập</th>
+                            <th style="width: 180px;">Mã hàng</th>
+                            <th style="width: 140px;">Lot/Batch</th>
+                            <th style="width: 100px;">SL lỗi</th>
+                            <th style="width: 200px;">Nguyên nhân</th>
+                            <th style="width: 150px;">Hướng xử lý</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fff3cd;">
+                            <td><span class="doc-code">SPKPH-2025-008</span></td>
+                            <td>13/10/2025</td>
+                            <td>PN-2025-0890</td>
+                            <td>PKG1_bao500</td>
+                            <td>20251013</td>
+                            <td style="text-align: right;">500 cái</td>
+                            <td>In lỗi logo, màu sắc không đúng</td>
+                            <td>Đang thương lượng NCC</td>
+                            <td><span class="status-badge warning">CHỜ XỬ LÝ</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Xử lý">⚡</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">SPKPH-2025-007</span></td>
+                            <td>10/10/2025</td>
+                            <td>PN-2025-0885</td>
+                            <td>SPIC_gia01</td>
+                            <td>20251010</td>
+                            <td style="text-align: right;">25 kg</td>
+                            <td>Bao bì bị rách, có dấu hiệu ẩm mốc</td>
+                            <td>Đã trả hàng NCC</td>
+                            <td><span class="status-badge success">ĐÃ ĐÓNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">SPKPH-2025-006</span></td>
+                            <td>08/10/2025</td>
+                            <td>PN-2025-0880</td>
+                            <td>MAIN_gao02</td>
+                            <td>20251008</td>
+                            <td style="text-align: right;">30 kg</td>
+                            <td>Độ ẩm vượt chuẩn (15.2%)</td>
+                            <td>NCC giảm giá 15%</td>
+                            <td><span class="status-badge success">ĐÃ ĐÓNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="In">🖨️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Stocktake Create Tab -->
+        <div class="tab-content" id="stocktake-create">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Tạo Kế hoạch Kiểm kê</h1>
+                    <div class="breadcrumb">Kiểm kê / Tạo kế hoạch kiểm kê</div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <form id="stocktakeCreateForm">
+                    <div class="section-title">Thông tin kế hoạch</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Loại kiểm kê <span class="required">*</span></label>
+                            <select class="form-select" required>
+                                <option value="">Chọn loại kiểm kê</option>
+                                <option value="periodic">Kiểm kê định kỳ</option>
+                                <option value="cycle">Kiểm kê tuần hoàn (Cycle Count)</option>
+                                <option value="spot">Kiểm kê đột xuất</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tên kế hoạch <span class="required">*</span></label>
+                            <input type="text" class="form-input" placeholder="Ví dụ: Kiểm kê cuối tháng 10/2025" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Ngày kiểm kê <span class="required">*</span></label>
+                            <input type="date" class="form-input" value="2025-10-20" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Thời gian</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="time" class="form-input" value="08:00" style="flex: 1;">
+                                <span style="line-height: 42px;">đến</span>
+                                <input type="time" class="form-input" value="17:00" style="flex: 1;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" checked style="margin-right: 8px;">
+                                Đóng băng giao dịch kho trong thời gian kiểm kê
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title" style="margin-top: 24px;">Phạm vi kiểm kê</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Kho <span class="required">*</span></label>
+                            <select class="form-select" required>
+                                <option value="">Chọn kho</option>
+                                <option value="ZN-WHRM-01">ZN-WHRM-01 - Kho Nguyên vật liệu</option>
+                                <option value="ZN-WHSP-01">ZN-WHSP-01 - Kho Vật tư</option>
+                                <option value="ZN-WHFG-01">ZN-WHFG-01 - Kho Thành phẩm</option>
+                                <option value="all">Tất cả kho</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dãy kệ</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox" checked> Dãy A
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox" checked> Dãy B
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox"> Dãy C
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox"> Dãy D
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label class="form-label">Nhóm hàng</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox" checked> NVL chính
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox" checked> Bao bì
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox"> Gia vị
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 4px; font-weight: normal;">
+                                    <input type="checkbox"> Thành phẩm
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title" style="margin-top: 24px;">Nhóm kiểm kê</div>
+                    
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">STT</th>
+                                <th style="width: 200px;">Vai trò</th>
+                                <th style="width: 250px;">Họ tên</th>
+                                <th style="width: 200px;">Bộ phận</th>
+                                <th>Ghi chú</th>
+                                <th style="width: 60px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">1</td>
+                                <td>Trưởng nhóm</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="">Chọn người</option>
+                                        <option value="user1" selected>Nguyễn Văn A</option>
+                                        <option value="user2">Trần Thị B</option>
+                                    </select>
+                                </td>
+                                <td>TO-KHO</td>
+                                <td><input type="text" class="form-input" placeholder="Ghi chú..."></td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn-delete-row">×</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">2</td>
+                                <td>Thành viên</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="">Chọn người</option>
+                                        <option value="user3" selected>Lê Thị C</option>
+                                    </select>
+                                </td>
+                                <td>Kế toán</td>
+                                <td><input type="text" class="form-input" placeholder="Ghi chú..."></td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn-delete-row">×</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn-add-row">
+                        + Thêm thành viên
+                    </button>
+                    
+                    <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
+                        <button type="button" class="btn-cancel">Hủy</button>
+                        <button type="button" class="btn-save">Lưu nháp</button>
+                        <button type="button" class="btn-save">Tạo kế hoạch & Gửi thông báo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Stocktake List Tab -->
+        <div class="tab-content" id="stocktake-list">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Danh sách Kiểm kê</h1>
+                    <div class="breadcrumb">Kiểm kê / Danh sách kiểm kê</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-add" onclick="$('.menu-item[data-tab=stocktake-create]').click()">
+                        + Tạo kế hoạch mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã kiểm kê, kho, người thực hiện...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Đang kiểm kê</button>
+                        <button class="filter-btn">Hoàn thành</button>
+                        <button class="filter-btn">Có sai lệch</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Mã kiểm kê</th>
+                            <th style="width: 200px;">Tên kế hoạch</th>
+                            <th style="width: 110px;">Ngày kiểm kê</th>
+                            <th style="width: 120px;">Loại</th>
+                            <th style="width: 120px;">Kho</th>
+                            <th style="width: 100px;">Tổng mã</th>
+                            <th style="width: 100px;">Đã kiểm</th>
+                            <th style="width: 100px;">Sai lệch</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="doc-code">KK-2025-10-20</span></td>
+                            <td>Kiểm kê định kỳ tháng 10</td>
+                            <td>20/10/2025</td>
+                            <td>Định kỳ</td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">45</td>
+                            <td style="text-align: center;">15</td>
+                            <td style="text-align: center;">2</td>
+                            <td><span class="status-badge processing">ĐANG KIỂM KÊ</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Tiếp tục">▶</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="doc-code">KK-2025-10-15</span></td>
+                            <td>Kiểm kê tuần hoàn - Dãy A</td>
+                            <td>15/10/2025</td>
+                            <td>Tuần hoàn</td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">20</td>
+                            <td style="text-align: center;">20</td>
+                            <td style="text-align: center;">1</td>
+                            <td><span class="status-badge success">HOÀN THÀNH</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Báo cáo">📊</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td><span class="doc-code">KK-2025-10-10</span></td>
+                            <td>Kiểm kê đột xuất - Hàng gần HSD</td>
+                            <td>10/10/2025</td>
+                            <td>Đột xuất</td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">12</td>
+                            <td style="text-align: center;">12</td>
+                            <td style="text-align: center;">5</td>
+                            <td><span class="status-badge warning">CÓ SAI LỆCH</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Xử lý">⚡</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Report Inventory Tab -->
+        <div class="tab-content" id="report-inventory">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Báo cáo Xuất Nhập Tồn</h1>
+                    <div class="breadcrumb">Báo cáo / Xuất Nhập Tồn</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-secondary">
+                        🖨️ In báo cáo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Tham số báo cáo</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Từ ngày <span class="required">*</span></label>
+                        <input type="date" class="form-input" value="2025-10-01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Đến ngày <span class="required">*</span></label>
+                        <input type="date" class="form-input" value="2025-10-31">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Kho</label>
+                        <select class="form-select">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHRM-01">ZN-WHRM-01 (NVL)</option>
+                            <option value="ZN-WHSP-01">ZN-WHSP-01 (Vật tư)</option>
+                            <option value="ZN-WHFG-01">ZN-WHFG-01 (Thành phẩm)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nhóm hàng</label>
+                        <select class="form-select">
+                            <option value="">Tất cả nhóm</option>
+                            <option value="main">NVL chính</option>
+                            <option value="packaging">Bao bì</option>
+                            <option value="spice">Gia vị</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                    <button class="btn-add">
+                        📊 Xem báo cáo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Báo cáo Xuất Nhập Tồn - Tháng 10/2025</div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">STT</th>
+                            <th style="width: 140px;">Mã hàng</th>
+                            <th style="width: 220px;">Tên hàng</th>
+                            <th style="width: 80px;">ĐVT</th>
+                            <th style="width: 120px;">Tồn đầu kỳ</th>
+                            <th style="width: 120px;">Nhập trong kỳ</th>
+                            <th style="width: 120px;">Xuất trong kỳ</th>
+                            <th style="width: 120px;">Tồn cuối kỳ</th>
+                            <th style="width: 140px;">Giá trị tồn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td>kg</td>
+                            <td style="text-align: right;">1,200</td>
+                            <td style="text-align: right; color: #27ae60;">+800</td>
+                            <td style="text-align: right; color: #dc3545;">-850</td>
+                            <td style="text-align: right; font-weight: 600;">1,150</td>
+                            <td style="text-align: right;">20,700,000đ</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">2</td>
+                            <td><span class="doc-code">SPIC_gia01</span></td>
+                            <td>Hạt nêm 1kg</td>
+                            <td>kg</td>
+                            <td style="text-align: right;">80</td>
+                            <td style="text-align: right; color: #27ae60;">+100</td>
+                            <td style="text-align: right; color: #dc3545;">-130</td>
+                            <td style="text-align: right; font-weight: 600;">50</td>
+                            <td style="text-align: right;">2,500,000đ</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">3</td>
+                            <td><span class="doc-code">PKG1_bao500</span></td>
+                            <td>Bao 500g in logo</td>
+                            <td>cái</td>
+                            <td style="text-align: right;">8,000</td>
+                            <td style="text-align: right; color: #27ae60;">+3,000</td>
+                            <td style="text-align: right; color: #dc3545;">-6,000</td>
+                            <td style="text-align: right; font-weight: 600;">5,000</td>
+                            <td style="text-align: right;">2,500,000đ</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">4</td>
+                            <td><span class="doc-code">PROT_thit01</span></td>
+                            <td>Thịt heo xay</td>
+                            <td>kg</td>
+                            <td style="text-align: right;">250</td>
+                            <td style="text-align: right; color: #27ae60;">+400</td>
+                            <td style="text-align: right; color: #dc3545;">-330</td>
+                            <td style="text-align: right; font-weight: 600;">320</td>
+                            <td style="text-align: right;">32,000,000đ</td>
+                        </tr>
+                        <tr style="background: #f9f9f9; font-weight: 600;">
+                            <td colspan="7" style="text-align: right;">TỔNG CỘNG:</td>
+                            <td style="text-align: right;">57,700,000đ</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                    <div style="padding: 16px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Tồn đầu kỳ</div>
+                        <div style="font-size: 20px; font-weight: 600; color: #2196F3;">85,500,000đ</div>
+                    </div>
+                    <div style="padding: 16px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Nhập trong kỳ</div>
+                        <div style="font-size: 20px; font-weight: 600; color: #27ae60;">+120,000,000đ</div>
+                    </div>
+                    <div style="padding: 16px; background: #ffebee; border-left: 4px solid #dc3545; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Xuất trong kỳ</div>
+                        <div style="font-size: 20px; font-weight: 600; color: #dc3545;">-98,750,000đ</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Report FEFO Tab -->
+        <div class="tab-content" id="report-fefo">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Báo cáo FEFO</h1>
+                    <div class="breadcrumb">Báo cáo / Báo cáo FEFO</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-secondary">
+                        ⚠️ Gửi cảnh báo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã hàng, lot/batch...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHRM-01">ZN-WHRM-01 (NVL)</option>
+                            <option value="ZN-WHFG-01">ZN-WHFG-01 (Thành phẩm)</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Quá hạn</button>
+                        <button class="filter-btn">< 30 ngày</button>
+                        <button class="filter-btn">< 60 ngày</button>
+                    </div>
+                </div>
+                
+                <div class="info-box" style="margin-bottom: 16px;">
+                    <strong>📌 FEFO:</strong> First-Expired, First-Out - Hàng hết hạn trước xuất trước. Báo cáo giúp theo dõi và ưu tiên xuất các lô hàng gần hết hạn.
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Ưu tiên</th>
+                            <th style="width: 140px;">Mã hàng</th>
+                            <th style="width: 220px;">Tên hàng</th>
+                            <th style="width: 140px;">Lot/Batch</th>
+                            <th style="width: 100px;">NSX</th>
+                            <th style="width: 100px;">HSD</th>
+                            <th style="width: 100px;">Còn lại (ngày)</th>
+                            <th style="width: 100px;">Số lượng</th>
+                            <th style="width: 180px;">Vị trí</th>
+                            <th style="width: 120px;">Cảnh báo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #ffebee;">
+                            <td style="text-align: center; font-size: 20px;">🔴 1</td>
+                            <td><span class="doc-code">SPIC_gia03</span></td>
+                            <td>Nước mắm 500ml</td>
+                            <td><strong>20240920</strong></td>
+                            <td>20/09/2024</td>
+                            <td>20/09/2025</td>
+                            <td style="text-align: right; color: #dc3545; font-weight: 600;">-25 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">15 chai</td>
+                            <td>ZN-WHRM-01-QUARANTINE</td>
+                            <td><span class="status-badge danger">🔴 QUÁ HẠN</span></td>
+                        </tr>
+                        <tr style="background: #fff3e0;">
+                            <td style="text-align: center; font-size: 20px;">🟠 2</td>
+                            <td><span class="doc-code">PROT_thit01</span></td>
+                            <td>Thịt heo xay</td>
+                            <td><strong>20251012</strong></td>
+                            <td>12/10/2025</td>
+                            <td>12/11/2025</td>
+                            <td style="text-align: right; color: #f39c12; font-weight: 600;">28 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">320 kg</td>
+                            <td>ZN-WHRM-01-C02-01-01</td>
+                            <td><span class="status-badge warning">🟠 < 30 NGÀY</span></td>
+                        </tr>
+                        <tr style="background: #fff9e6;">
+                            <td style="text-align: center; font-size: 20px;">🟡 3</td>
+                            <td><span class="doc-code">FG_banhgao100</span></td>
+                            <td>Bánh gạo 100g (gói)</td>
+                            <td><strong>20251001</strong></td>
+                            <td>01/10/2025</td>
+                            <td>01/12/2025</td>
+                            <td style="text-align: right; color: #f39c12;">48 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">1,500 gói</td>
+                            <td>ZN-WHFG-01-B02-03-01</td>
+                            <td><span class="status-badge warning">🟡 < 60 NGÀY</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-size: 20px;">🟢 4</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td><strong>20251006</strong></td>
+                            <td>06/10/2025</td>
+                            <td>06/10/2026</td>
+                            <td style="text-align: right; color: #27ae60;">357 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">500 kg</td>
+                            <td>ZN-WHRM-01-D01-03-02</td>
+                            <td><span class="status-badge success">🟢 AN TOÀN</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-size: 20px;">🟢 5</td>
+                            <td><span class="doc-code">MAIN_gao01</span></td>
+                            <td>Gạo nếp hạt ngắn</td>
+                            <td><strong>20251010</strong></td>
+                            <td>10/10/2025</td>
+                            <td>10/10/2026</td>
+                            <td style="text-align: right; color: #27ae60;">361 ngày</td>
+                            <td style="text-align: right; font-weight: 500;">750 kg</td>
+                            <td>ZN-WHRM-01-D01-04-01</td>
+                            <td><span class="status-badge success">🟢 AN TOÀN</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;">
+                    <div style="padding: 16px; background: #ffebee; border-left: 4px solid #dc3545; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">🔴 Quá hạn</div>
+                        <div style="font-size: 24px; font-weight: 600; color: #dc3545;">1 lô</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">Cần xử lý ngay</div>
+                    </div>
+                    <div style="padding: 16px; background: #fff3e0; border-left: 4px solid #f39c12; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">🟠 < 30 ngày</div>
+                        <div style="font-size: 24px; font-weight: 600; color: #f39c12;">1 lô</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">Ưu tiên xuất trước</div>
+                    </div>
+                    <div style="padding: 16px; background: #fff9e6; border-left: 4px solid #ffc107; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">🟡 < 60 ngày</div>
+                        <div style="font-size: 24px; font-weight: 600; color: #ffc107;">1 lô</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">Theo dõi</div>
+                    </div>
+                    <div style="padding: 16px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">🟢 An toàn</div>
+                        <div style="font-size: 24px; font-weight: 600; color: #27ae60;">42 lô</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">HSD còn lâu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Report Warehouse Tab -->
+        <div class="tab-content" id="report-warehouse">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Báo cáo Hiệu suất Kho</h1>
+                    <div class="breadcrumb">Báo cáo / Hiệu suất Kho</div>
+                </div>
+                <div class="header-actions">
+                    <select class="form-select" style="width: 150px;">
+                        <option value="month">Tháng này</option>
+                        <option value="quarter">Quý này</option>
+                        <option value="year">Năm nay</option>
+                    </select>
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Các chỉ số KPI - Tháng 10/2025</div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 300px;">Chỉ tiêu KPI</th>
+                            <th style="width: 120px;">Thực tế</th>
+                            <th style="width: 120px;">Mục tiêu</th>
+                            <th style="width: 120px;">% Đạt</th>
+                            <th style="width: 120px;">Xu hướng</th>
+                            <th style="width: 140px;">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Độ chính xác tồn kho</strong></td>
+                            <td style="text-align: right;">99.2%</td>
+                            <td style="text-align: right;">≥ 99.5%</td>
+                            <td style="text-align: right;">99.7%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 0.5%</td>
+                            <td><span class="status-badge warning">🟡 Gần đạt</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Tỷ lệ đáp ứng đơn hàng</strong></td>
+                            <td style="text-align: right;">96.5%</td>
+                            <td style="text-align: right;">≥ 95%</td>
+                            <td style="text-align: right;">101.6%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 2%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Tuân thủ FEFO/FIFO</strong></td>
+                            <td style="text-align: right;">98.1%</td>
+                            <td style="text-align: right;">≥ 98%</td>
+                            <td style="text-align: right;">100.1%</td>
+                            <td style="text-align: center; color: #27ae60;">↑ 1.2%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Thời gian xử lý nhập kho</strong></td>
+                            <td style="text-align: right;">1.2 giờ</td>
+                            <td style="text-align: right;">≤ 2 giờ</td>
+                            <td style="text-align: right;">60%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.3h</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Thời gian xử lý xuất kho</strong></td>
+                            <td style="text-align: right;">1.8 giờ</td>
+                            <td style="text-align: right;">≤ 2 giờ</td>
+                            <td style="text-align: right;">90%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.2h</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. Tỷ lệ hàng hư hỏng</strong></td>
+                            <td style="text-align: right;">0.25%</td>
+                            <td style="text-align: right;">≤ 0.3%</td>
+                            <td style="text-align: right;">83.3%</td>
+                            <td style="text-align: center; color: #27ae60;">↓ 0.05%</td>
+                            <td><span class="status-badge success">✅ Đạt</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="padding: 16px; background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 4px;">
+                        <strong>✅ Điểm mạnh:</strong>
+                        <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 13px;">
+                            <li>Tỷ lệ đáp ứng đơn hàng vượt mục tiêu</li>
+                            <li>Tuân thủ FEFO/FIFO duy trì tốt</li>
+                            <li>Thời gian xử lý nhanh hơn mục tiêu</li>
+                        </ul>
+                    </div>
+                    <div style="padding: 16px; background: #fff3e0; border-left: 4px solid #f39c12; border-radius: 4px;">
+                        <strong>⚠️ Cần cải thiện:</strong>
+                        <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 13px;">
+                            <li>Độ chính xác tồn kho cần tăng 0.3%</li>
+                            <li>Đề xuất: Tăng tần suất cycle count</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="section-title">Số liệu vận hành</div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                    <div style="padding: 16px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196F3;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Số phiếu nhập</div>
+                        <div style="font-size: 32px; font-weight: 600; color: #2196F3;">125</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">phiếu trong tháng</div>
+                    </div>
+                    <div style="padding: 16px; background: #fff3e0; border-radius: 8px; border-left: 4px solid #f39c12;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Số phiếu xuất</div>
+                        <div style="font-size: 32px; font-weight: 600; color: #f39c12;">238</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">phiếu trong tháng</div>
+                    </div>
+                    <div style="padding: 16px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #27ae60;">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Số lần kiểm kê</div>
+                        <div style="font-size: 32px; font-weight: 600; color: #27ae60;">4</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">lần trong tháng</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Master Warehouse Tab -->
+        <div class="tab-content" id="master-warehouse">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Danh mục Kho</h1>
+                    <div class="breadcrumb">Danh mục / Kho</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-add">
+                        + Thêm kho mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Mã kho</th>
+                            <th style="width: 250px;">Tên kho</th>
+                            <th style="width: 150px;">Loại kho</th>
+                            <th style="width: 300px;">Địa chỉ</th>
+                            <th style="width: 120px;">Diện tích (m²)</th>
+                            <th style="width: 150px;">Người quản lý</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ZN-WHRM-01</strong></td>
+                            <td>Kho Nguyên vật liệu</td>
+                            <td>Raw Material</td>
+                            <td>Lô A1, KCN Long Hậu, Bến Lức, Long An</td>
+                            <td style="text-align: right;">500 m²</td>
+                            <td>Nguyễn Văn A</td>
+                            <td><span class="status-badge success">HOẠT ĐỘNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHSP-01</strong></td>
+                            <td>Kho Vật tư & Phụ tùng</td>
+                            <td>Spare Parts</td>
+                            <td>Lô A1, KCN Long Hậu, Bến Lức, Long An</td>
+                            <td style="text-align: right;">200 m²</td>
+                            <td>Trần Thị B</td>
+                            <td><span class="status-badge success">HOẠT ĐỘNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHFG-01</strong></td>
+                            <td>Kho Thành phẩm Nhà máy</td>
+                            <td>Finished Goods</td>
+                            <td>Lô A1, KCN Long Hậu, Bến Lức, Long An</td>
+                            <td style="text-align: right;">600 m²</td>
+                            <td>Lê Văn C</td>
+                            <td><span class="status-badge success">HOẠT ĐỘNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHDC-01</strong></td>
+                            <td>Trung tâm Phân phối</td>
+                            <td>Distribution Center</td>
+                            <td>123 Quốc lộ 1A, Q. Bình Tân, TP.HCM</td>
+                            <td style="text-align: right;">800 m²</td>
+                            <td>Phạm Văn D</td>
+                            <td><span class="status-badge success">HOẠT ĐỘNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHSR-01</strong></td>
+                            <td>Kho Showroom</td>
+                            <td>Showroom</td>
+                            <td>456 Võ Văn Tần, Q.3, TP.HCM</td>
+                            <td style="text-align: right;">150 m²</td>
+                            <td>Hoàng Thị E</td>
+                            <td><span class="status-badge success">HOẠT ĐỘNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Master Location Tab -->
+        <div class="tab-content" id="master-location">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Danh mục Vị trí Lưu kho</h1>
+                    <div class="breadcrumb">Danh mục / Vị trí lưu kho</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Template
+                    </button>
+                    <button class="btn-secondary">
+                        📥 Import Excel
+                    </button>
+                    <button class="btn-add">
+                        + Thêm vị trí mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã vị trí, dãy, kệ...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả kho</option>
+                            <option value="ZN-WHRM-01">ZN-WHRM-01 (NVL)</option>
+                            <option value="ZN-WHSP-01">ZN-WHSP-01 (Vật tư)</option>
+                        </select>
+                        <select class="form-select" style="width: 120px;">
+                            <option value="">Tất cả dãy</option>
+                            <option value="A">Dãy A</option>
+                            <option value="B">Dãy B</option>
+                            <option value="C">Dãy C</option>
+                            <option value="D">Dãy D</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Mã vị trí</th>
+                            <th style="width: 120px;">Kho</th>
+                            <th style="width: 80px;">Dãy</th>
+                            <th style="width: 80px;">Kệ</th>
+                            <th style="width: 80px;">Tầng</th>
+                            <th style="width: 200px;">Loại hàng phù hợp</th>
+                            <th style="width: 120px;">Tải trọng max</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-D01-03-02</strong></td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">D01</td>
+                            <td style="text-align: center;">03</td>
+                            <td style="text-align: center;">02</td>
+                            <td>NVL chính - Hạt</td>
+                            <td style="text-align: right;">500 kg</td>
+                            <td><span class="status-badge warning">ĐANG SỬ DỤNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-D01-04-01</strong></td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">D01</td>
+                            <td style="text-align: center;">04</td>
+                            <td style="text-align: center;">01</td>
+                            <td>NVL chính - Hạt</td>
+                            <td style="text-align: right;">800 kg</td>
+                            <td><span class="status-badge warning">ĐANG SỬ DỤNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHSP-01-A01-02-01</strong></td>
+                            <td>ZN-WHSP-01</td>
+                            <td style="text-align: center;">A01</td>
+                            <td style="text-align: center;">02</td>
+                            <td style="text-align: center;">01</td>
+                            <td>Bao bì</td>
+                            <td style="text-align: right;">300 kg</td>
+                            <td><span class="status-badge warning">ĐANG SỬ DỤNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ZN-WHRM-01-A01-05-03</strong></td>
+                            <td>ZN-WHRM-01</td>
+                            <td style="text-align: center;">A01</td>
+                            <td style="text-align: center;">05</td>
+                            <td style="text-align: center;">03</td>
+                            <td>Bao bì phụ</td>
+                            <td style="text-align: right;">200 kg</td>
+                            <td><span class="status-badge success">TRỐNG</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Master Supplier Tab -->
+        <div class="tab-content" id="master-supplier">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Danh mục Nhà cung cấp</h1>
+                    <div class="breadcrumb">Danh mục / Nhà cung cấp</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        📤 Xuất Excel
+                    </button>
+                    <button class="btn-add">
+                        + Thêm NCC mới
+                    </button>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Tìm theo mã, tên NCC, SĐT...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" style="width: 180px;">
+                            <option value="">Tất cả nhóm</option>
+                            <option value="main">NVL chính</option>
+                            <option value="packaging">Bao bì</option>
+                            <option value="spice">Gia vị</option>
+                        </select>
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">Đang hợp tác</button>
+                        <button class="filter-btn">Ngừng hợp tác</button>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 120px;">Mã NCC</th>
+                            <th style="width: 220px;">Tên nhà cung cấp</th>
+                            <th style="width: 150px;">Nhóm hàng</th>
+                            <th style="width: 150px;">Điện thoại</th>
+                            <th style="width: 200px;">Email</th>
+                            <th style="width: 300px;">Địa chỉ</th>
+                            <th style="width: 120px;">Đánh giá</th>
+                            <th style="width: 120px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>NCC001</strong></td>
+                            <td>Công ty TNHH Đại Phát</td>
+                            <td>NVL chính</td>
+                            <td>0901234567</td>
+                            <td>daiphat@example.com</td>
+                            <td>Long An</td>
+                            <td>
+                                <span style="color: #ffc107;">⭐⭐⭐⭐⭐</span>
+                                <span style="font-size: 11px; color: #666;">(5.0)</span>
+                            </td>
+                            <td><span class="status-badge success">ĐANG HỢP TÁC</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>NCC002</strong></td>
+                            <td>Công ty CP Bao bì Việt</td>
+                            <td>Bao bì</td>
+                            <td>0912345678</td>
+                            <td>baobiviet@example.com</td>
+                            <td>Bình Dương</td>
+                            <td>
+                                <span style="color: #ffc107;">⭐⭐⭐⭐</span>
+                                <span style="font-size: 11px; color: #666;">(4.2)</span>
+                            </td>
+                            <td><span class="status-badge success">ĐANG HỢP TÁC</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>NCC003</strong></td>
+                            <td>Công ty TNHH Gia vị Việt Nam</td>
+                            <td>Gia vị</td>
+                            <td>0923456789</td>
+                            <td>giavivn@example.com</td>
+                            <td>TP. Hồ Chí Minh</td>
+                            <td>
+                                <span style="color: #ffc107;">⭐⭐⭐⭐⭐</span>
+                                <span style="font-size: 11px; color: #666;">(4.8)</span>
+                            </td>
+                            <td><span class="status-badge success">ĐANG HỢP TÁC</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>NCC004</strong></td>
+                            <td>Công ty TNHH Thực phẩm An Khang</td>
+                            <td>NVL chính</td>
+                            <td>0934567890</td>
+                            <td>ankhang@example.com</td>
+                            <td>Đồng Nai</td>
+                            <td>
+                                <span style="color: #ffc107;">⭐⭐⭐⭐</span>
+                                <span style="font-size: 11px; color: #666;">(4.5)</span>
+                            </td>
+                            <td><span class="status-badge success">ĐANG HỢP TÁC</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="opacity: 0.6;">
+                            <td><strong>NCC005</strong></td>
+                            <td>Công ty CP Thương mại ABC</td>
+                            <td>Bao bì</td>
+                            <td>0945678901</td>
+                            <td>abc@example.com</td>
+                            <td>TP. Hồ Chí Minh</td>
+                            <td>
+                                <span style="color: #ffc107;">⭐⭐</span>
+                                <span style="font-size: 11px; color: #666;">(2.5)</span>
+                            </td>
+                            <td><span class="status-badge danger">NGỪNG HỢP TÁC</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-view" title="Xem">👁️</button>
+                                    <button class="btn-edit" title="Sửa">✎</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     </div>
 </div>
 
@@ -1991,6 +4254,39 @@
         }
         
         closeModal('qcModal');
+    }
+    
+    // Add request detail row
+    let requestRowCounter = 0;
+    function addRequestDetailRow() {
+        requestRowCounter++;
+        const html = `
+            <tr>
+                <td style="text-align: center;">${requestRowCounter}</td>
+                <td>
+                    <select class="form-select">
+                        <option value="">Chọn mã hàng</option>
+                        <option value="MAIN_gao01">MAIN_gao01</option>
+                        <option value="PKG1_bao500">PKG1_bao500</option>
+                        <option value="SPIC_gia01">SPIC_gia01</option>
+                    </select>
+                </td>
+                <td><input type="text" class="form-input" placeholder="Tên hàng" readonly></td>
+                <td><input type="number" class="form-input" placeholder="0" min="1"></td>
+                <td><input type="text" class="form-input" placeholder="kg" readonly></td>
+                <td><input type="text" class="form-input" placeholder="0" readonly></td>
+                <td><input type="text" class="form-input" placeholder="Ghi chú..."></td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn-delete-row" onclick="$(this).closest('tr').remove()">×</button>
+                </td>
+            </tr>
+        `;
+        
+        if ($('#requestDetailBody tr').length === 1 && $('#requestDetailBody tr td').attr('colspan')) {
+            $('#requestDetailBody').html(html);
+        } else {
+            $('#requestDetailBody').append(html);
+        }
     }
 </script>
 
