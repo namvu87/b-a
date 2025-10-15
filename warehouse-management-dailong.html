@@ -916,6 +916,7 @@
         <div class="menu-title">⚙️ Danh mục</div>
         <div class="menu-item" data-tab="master-warehouse">Kho</div>
         <div class="menu-item" data-tab="master-location">Vị trí lưu kho</div>
+        <div class="menu-item" data-tab="warehouse-structure">Cấu trúc Kho</div>
         <div class="menu-item" data-tab="master-supplier">Nhà cung cấp</div>
     </div>
 </div>
@@ -3605,6 +3606,417 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        
+        <!-- Warehouse Structure Tab -->
+        <div class="tab-content" id="warehouse-structure">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Cấu trúc & Layout Kho</h1>
+                    <div class="breadcrumb">Danh mục / Cấu trúc Kho</div>
+                </div>
+                <div class="header-actions">
+                    <select class="form-select" id="warehouseSelect" style="width: 220px;">
+                        <option value="ZN-WHRM-01">ZN-WHRM-01 - Kho NVL</option>
+                        <option value="ZN-WHSP-01">ZN-WHSP-01 - Kho Vật tư</option>
+                        <option value="ZN-WHFG-01">ZN-WHFG-01 - Kho Thành phẩm</option>
+                        <option value="ZN-WHDC-01">ZN-WHDC-01 - TTPP</option>
+                    </select>
+                    <button class="btn-secondary">
+                        🗺️ Xem 3D
+                    </button>
+                    <button class="btn-secondary">
+                        🖨️ In sơ đồ
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hệ thống Kho Tổng thể -->
+            <div class="content-card">
+                <div class="section-title">🏭 Hệ thống Kho Đại Long Foods</div>
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                    <div style="padding: 16px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 8px; border-left: 4px solid #2196F3; cursor: pointer;" onclick="$('#warehouseSelect').val('ZN-WHRM-01').change()">
+                        <div style="font-size: 24px; margin-bottom: 8px;">📦</div>
+                        <div style="font-weight: 600; color: #1976D2; margin-bottom: 4px;">Kho NVL</div>
+                        <div style="font-size: 12px; color: #666;">ZN-WHRM-01</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">500 m² | 4 dãy</div>
+                    </div>
+                    
+                    <div style="padding: 16px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 8px; border-left: 4px solid #9c27b0; cursor: pointer;" onclick="$('#warehouseSelect').val('ZN-WHSP-01').change()">
+                        <div style="font-size: 24px; margin-bottom: 8px;">🔧</div>
+                        <div style="font-weight: 600; color: #7b1fa2; margin-bottom: 4px;">Kho Vật tư</div>
+                        <div style="font-size: 12px; color: #666;">ZN-WHSP-01</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">200 m² | 2 dãy</div>
+                    </div>
+                    
+                    <div style="padding: 16px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 8px; border-left: 4px solid #4caf50; cursor: pointer;" onclick="$('#warehouseSelect').val('ZN-WHFG-01').change()">
+                        <div style="font-size: 24px; margin-bottom: 8px;">✅</div>
+                        <div style="font-weight: 600; color: #388e3c; margin-bottom: 4px;">Kho Thành phẩm</div>
+                        <div style="font-size: 12px; color: #666;">ZN-WHFG-01</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">600 m² | 3 dãy</div>
+                    </div>
+                    
+                    <div style="padding: 16px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 8px; border-left: 4px solid #ff9800; cursor: pointer;" onclick="$('#warehouseSelect').val('ZN-WHDC-01').change()">
+                        <div style="font-size: 24px; margin-bottom: 8px;">🚚</div>
+                        <div style="font-weight: 600; color: #f57c00; margin-bottom: 4px;">TTPP</div>
+                        <div style="font-size: 12px; color: #666;">ZN-WHDC-01</div>
+                        <div style="font-size: 11px; color: #999; margin-top: 4px;">800 m² | 5 dãy</div>
+                    </div>
+                </div>
+                
+                <div style="padding: 16px; background: #f9f9f9; border-radius: 4px;">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;">
+                        <div>
+                            <div style="font-size: 24px; font-weight: 600; color: #2196F3;">8</div>
+                            <div style="font-size: 12px; color: #666;">Tổng số kho</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 600; color: #4caf50;">2,450 m²</div>
+                            <div style="font-size: 12px; color: #666;">Tổng diện tích</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 600; color: #f39c12;">156</div>
+                            <div style="font-size: 12px; color: #666;">Tổng vị trí lưu kho</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: 600; color: #9c27b0;">78%</div>
+                            <div style="font-size: 12px; color: #666;">Tỷ lệ sử dụng</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Layout Chi tiết Kho -->
+            <div class="content-card">
+                <div class="section-title">🗺️ Layout Kho: <span id="currentWarehouseName">ZN-WHRM-01 - Kho Nguyên vật liệu</span></div>
+                
+                <div style="background: #fff; border: 2px solid #ddd; border-radius: 8px; padding: 24px; position: relative;">
+                    
+                    <!-- Cửa nhập hàng -->
+                    <div style="background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 4px; margin-bottom: 16px; font-weight: 600;">
+                        🚛 CỬA NHẬP HÀNG (DOCK 1)
+                    </div>
+                    
+                    <!-- Khu vực nhận hàng & QC -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div style="background: #fff3cd; border: 2px dashed #ffc107; padding: 16px; border-radius: 4px; text-align: center;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📦</div>
+                            <div style="font-weight: 600; color: #856404;">KHU VỰC NHẬN HÀNG</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 4px;">🟡 Nhãn VÀNG "Chờ kiểm tra"</div>
+                        </div>
+                        <div style="background: #e3f2fd; border: 2px dashed #2196F3; padding: 16px; border-radius: 4px; text-align: center;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🔬</div>
+                            <div style="font-weight: 600; color: #1565C0;">KHU VỰC QC</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 4px;">Bàn lấy mẫu & Kiểm tra</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lối đi chính -->
+                    <div style="background: #f5f5f5; padding: 8px; text-align: center; margin-bottom: 16px; border-radius: 4px; border: 2px solid #999;">
+                        <strong>← LỐI ĐI CHÍNH (Rộng 2.5m cho xe nâng) →</strong>
+                    </div>
+                    
+                    <!-- Khu vực lưu kho - Layout dạng lưới -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        
+                        <!-- DÃY A - Bao bì -->
+                        <div style="border: 3px solid #2196F3; border-radius: 8px; overflow: hidden;">
+                            <div style="background: #2196F3; color: white; padding: 12px; font-weight: 600; text-align: center;">
+                                📦 DÃY A: BAO BÌ (PKG1, PKG2)
+                            </div>
+                            <div style="padding: 16px; background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 12px; font-weight: 600;">🔵 Hàng B, C</span>
+                                    <span style="font-size: 11px; color: #666;">10 kệ (A01-A10)</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+                                    <div style="background: #64b5f6; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A01</div>
+                                    <div style="background: #64b5f6; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A02</div>
+                                    <div style="background: #42a5f5; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A03</div>
+                                    <div style="background: #42a5f5; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A04</div>
+                                    <div style="background: #42a5f5; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A05</div>
+                                    <div style="background: #2196F3; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A06</div>
+                                    <div style="background: #2196F3; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A07</div>
+                                    <div style="background: #1e88e5; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A08</div>
+                                    <div style="background: #1e88e5; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A09</div>
+                                    <div style="background: #1976D2; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">A10</div>
+                                </div>
+                                <div style="margin-top: 8px; font-size: 11px; color: #666; text-align: center;">
+                                    Sử dụng: 7/10 kệ (70%)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DÃY C - Gia vị -->
+                        <div style="border: 3px solid #ff9800; border-radius: 8px; overflow: hidden;">
+                            <div style="background: #ff9800; color: white; padding: 12px; font-weight: 600; text-align: center;">
+                                🌶️ DÃY C: GIA VỊ & TOPPING
+                            </div>
+                            <div style="padding: 16px; background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 12px; font-weight: 600;">🔵 Hàng B</span>
+                                    <span style="font-size: 11px; color: #666;">10 kệ (C01-C10)</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+                                    <div style="background: #ffb74d; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C01</div>
+                                    <div style="background: #ffa726; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C02</div>
+                                    <div style="background: #ffa726; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C03</div>
+                                    <div style="background: #ff9800; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C04</div>
+                                    <div style="background: #ff9800; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C05</div>
+                                    <div style="background: #f57c00; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C06</div>
+                                    <div style="background: #f57c00; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C07</div>
+                                    <div style="background: #e65100; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C08</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C09</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">C10</div>
+                                </div>
+                                <div style="margin-top: 8px; font-size: 11px; color: #666; text-align: center;">
+                                    Sử dụng: 8/10 kệ (80%)
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Lối đi chính -->
+                    <div style="background: #f5f5f5; padding: 8px; text-align: center; margin-bottom: 16px; border-radius: 4px; border: 2px solid #999;">
+                        <strong>← LỐI ĐI CHÍNH (Rộng 2.5m cho xe nâng) →</strong>
+                    </div>
+                    
+                    <!-- Dãy B và D -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        
+                        <!-- DÃY B - Bao bì thùng -->
+                        <div style="border: 3px solid #4caf50; border-radius: 8px; overflow: hidden;">
+                            <div style="background: #4caf50; color: white; padding: 12px; font-weight: 600; text-align: center;">
+                                📦 DÃY B: BAO BÌ (Thùng, PKG3)
+                            </div>
+                            <div style="padding: 16px; background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 12px; font-weight: 600;">🟢 Hàng C</span>
+                                    <span style="font-size: 11px; color: #666;">10 kệ (B01-B10)</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+                                    <div style="background: #81c784; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B01</div>
+                                    <div style="background: #66bb6a; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B02</div>
+                                    <div style="background: #66bb6a; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B03</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B04</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B05</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B06</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B07</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B08</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B09</div>
+                                    <div style="background: #ddd; color: #999; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">B10</div>
+                                </div>
+                                <div style="margin-top: 8px; font-size: 11px; color: #666; text-align: center;">
+                                    Sử dụng: 3/10 kệ (30%)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DÃY D - Nguyên liệu chính -->
+                        <div style="border: 3px solid #dc3545; border-radius: 8px; overflow: hidden;">
+                            <div style="background: #dc3545; color: white; padding: 12px; font-weight: 600; text-align: center;">
+                                🌾 DÃY D: NGUYÊN LIỆU CHÍNH
+                            </div>
+                            <div style="padding: 16px; background: linear-gradient(135deg, #ffebee 0%, #ffffff 100%);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 12px; font-weight: 600;">🔴 Hàng A (Tần suất cao)</span>
+                                    <span style="font-size: 11px; color: #666;">10 kệ (D01-D10)</span>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+                                    <div style="background: #e57373; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D01</div>
+                                    <div style="background: #ef5350; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D02</div>
+                                    <div style="background: #f44336; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D03</div>
+                                    <div style="background: #e53935; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D04</div>
+                                    <div style="background: #d32f2f; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D05</div>
+                                    <div style="background: #c62828; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D06</div>
+                                    <div style="background: #b71c1c; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D07</div>
+                                    <div style="background: #b71c1c; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D08</div>
+                                    <div style="background: #b71c1c; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D09</div>
+                                    <div style="background: #b71c1c; color: white; padding: 8px 4px; text-align: center; border-radius: 3px; font-size: 10px; font-weight: 600;">D10</div>
+                                </div>
+                                <div style="margin-top: 8px; font-size: 11px; color: #666; text-align: center;">
+                                    Sử dụng: 10/10 kệ (100%)
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Lối đi chính -->
+                    <div style="background: #f5f5f5; padding: 8px; text-align: center; margin-bottom: 16px; border-radius: 4px; border: 2px solid #999;">
+                        <strong>← LỐI ĐI CHÍNH (Rộng 2.5m cho xe nâng) →</strong>
+                    </div>
+                    
+                    <!-- Khu vực soạn hàng & Xuất -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div style="background: #e1f5fe; border: 2px dashed #03a9f4; padding: 16px; border-radius: 4px; text-align: center;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
+                            <div style="font-weight: 600; color: #0277bd;">KHU VỰC SOẠN HÀNG</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 4px;">Staging Area - Chuẩn bị xuất</div>
+                        </div>
+                        <div style="background: #f3e5f5; border: 2px dashed #9c27b0; padding: 16px; border-radius: 4px; text-align: center;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">⚡</div>
+                            <div style="font-weight: 600; color: #6a1b9a;">KHU CHỜ CẤP PHÁT</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 4px;">Chờ Sản xuất nhận hàng</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cửa xuất -->
+                    <div style="background: #ff5722; color: white; padding: 12px; text-align: center; border-radius: 4px; font-weight: 600;">
+                        🚀 CỬA XUẤT SANG XƯỞNG SẢN XUẤT
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Phân loại ABC & FEFO -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                
+                <!-- Phân loại ABC -->
+                <div class="content-card">
+                    <div class="section-title">📊 Phân loại Hàng theo ABC</div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #ffebee; border-left: 4px solid #dc3545; border-radius: 4px; margin-bottom: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: #dc3545;">🔴 NHÓM A - Tần suất rất cao</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 2px;">Hàng ngày | Dãy D - Gần lối đi, tầng thấp</div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 600; color: #dc3545;">35%</div>
+                        </div>
+                        <div style="padding-left: 16px; font-size: 12px; color: #666;">
+                            Ví dụ: Gạo, Dầu ăn, Ruốc, Thịt
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 4px; margin-bottom: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: #2196F3;">🔵 NHÓM B - Tần suất trung bình</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 2px;">2-3 lần/tuần | Dãy A, C - Tầng 1-2</div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 600; color: #2196F3;">45%</div>
+                        </div>
+                        <div style="padding-left: 16px; font-size: 12px; color: #666;">
+                            Ví dụ: Gia vị, Topping, Bao bì chính
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 4px; margin-bottom: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: #4caf50;">🟢 NHÓM C - Tần suất thấp</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 2px;">Ít khi dùng | Dãy B - Tầng cao, phía trong</div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 600; color: #4caf50;">20%</div>
+                        </div>
+                        <div style="padding-left: 16px; font-size: 12px; color: #666;">
+                            Ví dụ: Bao bì dự phòng, Phụ liệu
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nguyên tắc FEFO -->
+                <div class="content-card">
+                    <div class="section-title">📅 Nguyên tắc Bố trí FIFO/FEFO</div>
+                    
+                    <div style="background: #fff3e0; border-left: 4px solid #f39c12; padding: 16px; border-radius: 4px; margin-bottom: 16px;">
+                        <div style="font-weight: 600; color: #e65100; margin-bottom: 8px;">⚡ Nguyên tắc vàng:</div>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #666;">
+                            <li>Hàng mới đặt vào <strong>phía trong/sau</strong></li>
+                            <li>Hàng cũ đặt ở <strong>ngoài, gần lối đi</strong></li>
+                            <li>Nhân viên luôn lấy từ <strong>ngoài vào trong</strong></li>
+                            <li>Hàng có HSD gần nhất được <strong>ưu tiên xuất trước</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="border: 2px solid #ddd; border-radius: 8px; padding: 16px; background: #fafafa;">
+                        <div style="text-align: center; margin-bottom: 12px; font-weight: 600; color: #333;">Sơ đồ bố trí kệ theo FEFO</div>
+                        
+                        <div style="position: relative;">
+                            <!-- Kệ -->
+                            <div style="border: 3px solid #333; border-radius: 4px; padding: 16px; background: white;">
+                                
+                                <!-- Lô mới - Phía trong -->
+                                <div style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%); color: white; padding: 16px; border-radius: 4px; margin-bottom: 12px; text-align: center; border: 2px solid #4caf50;">
+                                    <div style="font-size: 24px; margin-bottom: 4px;">📦 LÔ HÀNG MỚI</div>
+                                    <div style="font-size: 13px; font-weight: 600;">HSD: 15/12/2026 (Xa hơn)</div>
+                                    <div style="font-size: 11px; margin-top: 4px;">← Đặt vào SAU CÙNG</div>
+                                </div>
+                                
+                                <!-- Lô cũ - Phía ngoài -->
+                                <div style="background: linear-gradient(135deg, #ff9800 0%, #ffa726 100%); color: white; padding: 16px; border-radius: 4px; text-align: center; border: 2px solid #ff9800;">
+                                    <div style="font-size: 24px; margin-bottom: 4px;">📦 LÔ HÀNG CŨ</div>
+                                    <div style="font-size: 13px; font-weight: 600;">HSD: 15/10/2026 (Gần hơn)</div>
+                                    <div style="font-size: 11px; margin-top: 4px;">Nằm ở NGOÀI, dễ lấy →</div>
+                                </div>
+                                
+                            </div>
+                            
+                            <!-- Lối đi -->
+                            <div style="margin-top: 12px; padding: 12px; background: #f5f5f5; border: 2px solid #999; border-radius: 4px; text-align: center;">
+                                <div style="font-size: 24px; margin-bottom: 4px;">👷</div>
+                                <div style="font-weight: 600; color: #333;">← LỐI ĐI →</div>
+                                <div style="font-size: 11px; color: #666;">Nhân viên lấy hàng từ ngoài vào trong</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Chú thích -->
+            <div class="content-card">
+                <div class="section-title">🎨 Chú thích Màu sắc & Ký hiệu</div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #dc3545; border-radius: 4px;"></div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Nhóm A</div>
+                            <div style="font-size: 11px; color: #666;">Tần suất rất cao</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #2196F3; border-radius: 4px;"></div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Nhóm B</div>
+                            <div style="font-size: 11px; color: #666;">Tần suất trung bình</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #4caf50; border-radius: 4px;"></div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Nhóm C</div>
+                            <div style="font-size: 11px; color: #666;">Tần suất thấp</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #ddd; border-radius: 4px;"></div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Vị trí trống</div>
+                            <div style="font-size: 11px; color: #666;">Chưa sử dụng</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #fff3cd; border: 2px dashed #ffc107; border-radius: 4px;"></div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Khu tạm</div>
+                            <div style="font-size: 11px; color: #666;">Nhận/QC/Soạn hàng</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; background: #f5f5f5; border: 2px solid #999; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 600;">↔</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 13px;">Lối đi</div>
+                            <div style="font-size: 11px; color: #666;">Rộng ≥ 2.5m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         
         <!-- Master Supplier Tab -->
