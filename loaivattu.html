@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loại vật tư & Đơn vị tính - MISA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 240px;
+            background: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .menu-section {
+            border-bottom: 1px solid #eee;
+        }
+        .menu-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #a32718;
+            padding: 12px 16px;
+            cursor: pointer;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-title:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item {
+            font-size: 13px;
+            color: #555;
+            padding: 6px 32px;
+            cursor: pointer;
+            display: none;
+        }
+        .menu-item:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item.active {
+            background-color: #f1e8e3;
+            color: #a32718;
+            font-weight: 600;
+        }
+        .menu-section.active .menu-item {
+            display: block;
+        }
+        .menu-section.active .menu-title::after {
+            content: "−";
+        }
+        .menu-title::after {
+            content: "+";
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            background: #a32718;
+            color: white;
+            padding: 16px 24px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 4px solid #ecc67d;
+        }
+        .main-content {
+            flex: 1;
+            background: #f5f5f5;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            gap: 24px;
+        }
+        .section-card {
+            flex: 1;
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        .btn-add {
+            background-color: #00a389;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-add:hover {
+            background-color: #008c73;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            background: #fff;
+            margin-bottom: 16px;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+        .search-icon {
+            color: #999;
+            margin-right: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        thead {
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+        }
+        th {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            color: #555;
+        }
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+        .empty-state-text {
+            font-size: 13px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .btn-action {
+            background: #00a389;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-action:hover {
+            background: #008c73;
+        }
+        .btn-action.btn-delete {
+            background: #dc3545;
+        }
+        .btn-action.btn-delete:hover {
+            background: #c82333;
+        }
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #555;
+        }
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pagination-controls select {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+        }
+        .pagination-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .pagination-buttons button {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .pagination-buttons button:hover {
+            background: #f5f5f5;
+        }
+        .pagination-buttons button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            color: #333;
+        }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-label .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: #00a389;
+            border-width: 2px;
+            padding: 9px 11px;
+        }
+        textarea.form-input {
+            min-height: 80px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .btn-cancel {
+            background: #ffffff;
+            color: #333333;
+            border: 1px solid #d0d0d0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-cancel:hover {
+            background: #f5f5f5;
+        }
+        .btn-save {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-save:hover {
+            background: #008c73;
+        }
+        .btn-save-add {
+            background: #ffffff;
+            color: #333333;
+            border: 1px solid #d0d0d0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-save-add:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="menu-section active">
+        <div class="menu-title">Danh mục</div>
+        <div class="menu-item">Cấu trúc bộ cục</div>
+
+        <div class="menu-item">Nhóm tài sản</div>
+        <div class="menu-item">Vị trí tài sản</div>
+        <div class="menu-item">Nhà cung cấp</div>
+        <div class="menu-item">Nhóm nhà cung cấp</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-item active">Loại vật tư</div>
+        <div class="menu-item active">Đơn vị tính</div>
+        <div class="menu-title">Vật tư</div>
+        <div class="menu-item">Danh sách vật tư</div>
+        <div class="menu-item">Nhập xuất vật tư</div>
+        <div class="menu-item">Kiểm kê</div>
+    </div>
+</div>
+
+<div class="content">
+    <header>Danh mục vật tư</header>
+
+    <div class="main-content">
+        <!-- Loại vật tư -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">Loại vật tư</h2>
+                <button class="btn-add" id="addMaterialTypeBtn">+ Thêm mới</button>
+            </div>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchMaterialType" placeholder="Nhập mã hoặc tên để tìm kiếm...">
+            </div>
+
+            <div class="table-container">
+                <table id="materialTypeTable">
+                    <thead>
+                    <tr>
+                        <th style="width: 150px;">Mã loại</th>
+                        <th>Loại vật tư</th>
+                        <th style="width: 120px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>LT</td>
+                        <td>Linh tinh</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action" onclick="editMaterialType(0)">Sửa</button>
+                                <button class="btn-action btn-delete" onclick="deleteMaterialType(0)">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <span>Tổng số bản ghi <strong>1</strong></span>
+                <div class="pagination-controls">
+                    <select>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span>Từ <strong>1</strong> đến <strong>1</strong></span>
+                    <div class="pagination-buttons">
+                        <button disabled>‹</button>
+                        <button disabled>›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đơn vị tính -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">Đơn vị tính</h2>
+                <button class="btn-add" id="addUnitBtn">+ Thêm mới</button>
+            </div>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchUnit" placeholder="Nhập tên hoặc mô tả để tìm kiếm...">
+            </div>
+
+            <div class="table-container">
+                <table id="unitTable">
+                    <thead>
+                    <tr>
+                        <th>Đơn vị tính</th>
+                        <th style="width: 120px;">Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Bao</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action" onclick="editUnit(0)">Sửa</button>
+                                <button class="btn-action btn-delete" onclick="deleteUnit(0)">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bình</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action" onclick="editUnit(1)">Sửa</button>
+                                <button class="btn-action btn-delete" onclick="deleteUnit(1)">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bộ</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action" onclick="editUnit(2)">Sửa</button>
+                                <button class="btn-action btn-delete" onclick="deleteUnit(2)">Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <span>Tổng số bản ghi <strong>37</strong></span>
+                <div class="pagination-controls">
+                    <select>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span>Từ <strong>1</strong> đến <strong>20</strong></span>
+                    <div class="pagination-buttons">
+                        <button disabled>‹</button>
+                        <button>›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Loại vật tư -->
+<div class="modal-overlay" id="materialTypeModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="materialTypeModalTitle">Thêm mới loại vật tư</h2>
+            <button class="modal-close" onclick="closeMaterialTypeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form id="materialTypeForm">
+                <div class="form-group">
+                    <label class="form-label">Loại vật tư <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="materialTypeName" placeholder="Nhập loại vật tư" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mã loại vật tư <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="materialTypeCode" placeholder="Nhập mã loại vật tư" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mô tả</label>
+                    <textarea class="form-input" id="materialTypeDesc" placeholder="Nhập mô tả"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeMaterialTypeModal()">Hủy</button>
+            <button class="btn-save-add" id="saveMaterialTypeAdd">Lưu và thêm mới</button>
+            <button class="btn-save" id="saveMaterialType">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Đơn vị tính -->
+<div class="modal-overlay" id="unitModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="unitModalTitle">Thêm mới đơn vị tính</h2>
+            <button class="modal-close" onclick="closeUnitModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form id="unitForm">
+                <div class="form-group">
+                    <label class="form-label">Đơn vị tính <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="unitName" placeholder="Nhập đơn vị tính" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mô tả</label>
+                    <textarea class="form-input" id="unitDesc" placeholder="Nhập mô tả"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeUnitModal()">Hủy</button>
+            <button class="btn-save-add" id="saveUnitAdd">Lưu và thêm mới</button>
+            <button class="btn-save" id="saveUnit">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data storage
+    let materialTypes = [{code: 'LT', name: 'Linh tinh', desc: ''}];
+    let units = [{name: 'Bao', desc: ''}, {name: 'Bình', desc: ''}, {name: 'Bộ', desc: ''}];
+    let editingMaterialTypeIndex = -1;
+    let editingUnitIndex = -1;
+
+    // Toggle menu
+    document.querySelectorAll('.menu-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const section = title.parentElement;
+            section.classList.toggle('active');
+        });
+    });
+
+    // Material Type Modal
+    const materialTypeModal = document.getElementById('materialTypeModal');
+    document.getElementById('addMaterialTypeBtn').addEventListener('click', () => {
+        editingMaterialTypeIndex = -1;
+        document.getElementById('materialTypeModalTitle').textContent = 'Thêm mới loại vật tư';
+        document.getElementById('materialTypeForm').reset();
+        document.getElementById('saveMaterialTypeAdd').style.display = 'inline-block';
+        materialTypeModal.classList.add('active');
+    });
+
+    function closeMaterialTypeModal() {
+        materialTypeModal.classList.remove('active');
+        editingMaterialTypeIndex = -1;
+    }
+
+    function editMaterialType(index) {
+        editingMaterialTypeIndex = index;
+        const type = materialTypes[index];
+        document.getElementById('materialTypeModalTitle').textContent = 'Sửa loại vật tư';
+        document.getElementById('materialTypeName').value = type.name;
+        document.getElementById('materialTypeCode').value = type.code;
+        document.getElementById('materialTypeDesc').value = type.desc;
+        document.getElementById('saveMaterialTypeAdd').style.display = 'none';
+        materialTypeModal.classList.add('active');
+    }
+
+    function saveMaterialTypeData(addNew = false) {
+        const name = document.getElementById('materialTypeName').value.trim();
+        const code = document.getElementById('materialTypeCode').value.trim();
+        const desc = document.getElementById('materialTypeDesc').value.trim();
+
+        if (!name || !code) {
+            alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+            return;
+        }
+
+        const type = {name, code, desc};
+
+        if (editingMaterialTypeIndex >= 0) {
+            materialTypes[editingMaterialTypeIndex] = type;
+        } else {
+            materialTypes.push(type);
+        }
+
+        renderMaterialTypeTable();
+
+        if (addNew) {
+            document.getElementById('materialTypeForm').reset();
+            editingMaterialTypeIndex = -1;
+        } else {
+            closeMaterialTypeModal();
+        }
+    }
+
+    document.getElementById('saveMaterialType').addEventListener('click', () => saveMaterialTypeData(false));
+    document.getElementById('saveMaterialTypeAdd').addEventListener('click', () => saveMaterialTypeData(true));
+
+    function deleteMaterialType(index) {
+        if (confirm('Bạn có chắc chắn muốn xóa loại vật tư này?')) {
+            materialTypes.splice(index, 1);
+            renderMaterialTypeTable();
+        }
+    }
+
+    function renderMaterialTypeTable() {
+        const tbody = document.querySelector('#materialTypeTable tbody');
+        tbody.innerHTML = materialTypes.map((type, index) => `
+            <tr>
+                <td>${type.code}</td>
+                <td>${type.name}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-action" onclick="editMaterialType(${index})">Sửa</button>
+                        <button class="btn-action btn-delete" onclick="deleteMaterialType(${index})">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Unit Modal
+    const unitModal = document.getElementById('unitModal');
+    document.getElementById('addUnitBtn').addEventListener('click', () => {
+        editingUnitIndex = -1;
+        document.getElementById('unitModalTitle').textContent = 'Thêm mới đơn vị tính';
+        document.getElementById('unitForm').reset();
+        document.getElementById('saveUnitAdd').style.display = 'inline-block';
+        unitModal.classList.add('active');
+    });
+
+    function closeUnitModal() {
+        unitModal.classList.remove('active');
+        editingUnitIndex = -1;
+    }
+
+    function editUnit(index) {
+        editingUnitIndex = index;
+        const unit = units[index];
+        document.getElementById('unitModalTitle').textContent = 'Sửa đơn vị tính';
+        document.getElementById('unitName').value = unit.name;
+        document.getElementById('unitDesc').value = unit.desc;
+        document.getElementById('saveUnitAdd').style.display = 'none';
+        unitModal.classList.add('active');
+    }
+
+    function saveUnitData(addNew = false) {
+        const name = document.getElementById('unitName').value.trim();
+        const desc = document.getElementById('unitDesc').value.trim();
+
+        if (!name) {
+            alert('Vui lòng nhập đơn vị tính!');
+            return;
+        }
+
+        const unit = {name, desc};
+
+        if (editingUnitIndex >= 0) {
+            units[editingUnitIndex] = unit;
+        } else {
+            units.push(unit);
+        }
+
+        renderUnitTable();
+
+        if (addNew) {
+            document.getElementById('unitForm').reset();
+            editingUnitIndex = -1;
+        } else {
+            closeUnitModal();
+        }
+    }
+
+    document.getElementById('saveUnit').addEventListener('click', () => saveUnitData(false));
+    document.getElementById('saveUnitAdd').addEventListener('click', () => saveUnitData(true));
+
+    function deleteUnit(index) {
+        if (confirm('Bạn có chắc chắn muốn xóa đơn vị tính này?')) {
+            units.splice(index, 1);
+            renderUnitTable();
+        }
+    }
+
+    function renderUnitTable() {
+        const tbody = document.querySelector('#unitTable tbody');
+        tbody.innerHTML = units.map((unit, index) => `
+            <tr>
+                <td>${unit.name}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-action" onclick="editUnit(${index})">Sửa</button>
+                        <button class="btn-action btn-delete" onclick="deleteUnit(${index})">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Search functionality
+    document.getElementById('searchMaterialType').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#materialTypeTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    document.getElementById('searchUnit').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#unitTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Close modal on overlay click
+    materialTypeModal.addEventListener('click', (e) => {
+        if (e.target === materialTypeModal) closeMaterialTypeModal();
+    });
+
+    unitModal.addEventListener('click', (e) => {
+        if (e.target === unitModal) closeUnitModal();
+    });
+</script>
+</body>
+</html>

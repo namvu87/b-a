@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Kho - Đại Long Foods</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #a32718;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            padding: 24px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #a32718 0%, #c62e1f 100%);
+            color: white;
+            border-bottom: 3px solid #8b2015;
+        }
+
+        .logo h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            opacity: 0.95;
+        }
+
+        .menu-section {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #a32718;
+            padding: 14px 20px;
+            cursor: pointer;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .menu-title:hover {
+            background-color: #fff5f4;
+        }
+
+        .menu-title::after {
+            content: "+";
+            font-weight: bold;
+            font-size: 18px;
+            color: #a32718;
+        }
+
+        .menu-section.active .menu-title::after {
+            content: "−";
+        }
+
+        .menu-item {
+            font-size: 13px;
+            color: #555;
+            padding: 10px 20px 10px 40px;
+            cursor: pointer;
+            display: none;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+
+        .menu-section.active .menu-item {
+            display: block;
+        }
+
+        .menu-item:hover {
+            background-color: #fff5f4;
+            color: #a32718;
+            padding-left: 42px;
+        }
+
+        .menu-item.active {
+            background-color: #ffe8e5;
+            color: #a32718;
+            font-weight: 600;
+            border-left: 4px solid #a32718;
+            padding-left: 36px;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #a32718 0%, #c62e1f 100%);
+            color: white;
+            padding: 18px 28px;
+            font-weight: 600;
+            font-size: 17px;
+            border-bottom: 3px solid #8b2015;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            background: #a32718;
+            padding: 28px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            background: #fff;
+            padding: 20px 24px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #a32718;
+        }
+
+        .btn-add {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 11px 26px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(163,39,24,0.35);
+        }
+
+        .btn-add:hover {
+            background: #8b2015;
+            box-shadow: 0 4px 10px rgba(163,39,24,0.45);
+            transform: translateY(-1px);
+        }
+
+        /* Content Card */
+        .content-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #a32718;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a32718;
+            display: inline-block;
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 11px 16px;
+            background: #fff;
+            max-width: 450px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .search-icon {
+            color: #999;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toolbar-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: #a32718;
+            border: none;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #8b2015;
+            box-shadow: 0 2px 8px rgba(163,39,24,0.35);
+            transform: translateY(-1px);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #fff;
+        }
+
+        thead {
+            background-color: #f8f8f8;
+        }
+
+        th {
+            border: 1px solid #e8e8e8;
+            padding: 14px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #a32718;
+        }
+
+        th input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        td {
+            border: 1px solid #e8e8e8;
+            padding: 13px 14px;
+            color: #555;
+        }
+
+        tbody tr {
+            transition: all 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #fff5f4;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-warning {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .status-danger {
+            background-color: #ffebee;
+            color: #a32718;
+        }
+
+        .status-info {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .status-success::before,
+        .status-warning::before,
+        .status-danger::before,
+        .status-info::before {
+            content: "●";
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 22px;
+            border: 1px solid #e8e8e8;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #a32718;
+            box-shadow: 0 4px 16px rgba(163,39,24,0.15);
+            transform: translateY(-3px);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .stat-title {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-icon.blue { background: #e3f2fd; }
+        .stat-icon.green { background: #e8f5e9; }
+        .stat-icon.orange { background: #fff3e0; }
+        .stat-icon.red { background: #ffebee; }
+
+        .stat-value {
+            font-size: 34px;
+            font-weight: 700;
+            color: #a32718;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .stat-change.up {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .stat-change.down {
+            color: #a32718;
+            font-weight: 600;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            margin-bottom: 28px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .action-btn {
+            padding: 16px 18px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            color: #a32718;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            border-color: #a32718;
+            color: #ffffff;
+            background: #a32718;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(163,39,24,0.15);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f4f4f4;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a32718;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b2015;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="logo">
+        <h2>🏭 ĐẠI LONG FOODS</h2>
+        <p>Hệ thống Quản lý Kho</p>
+    </div>
+
+    <div class="menu-section active">
+        <div class="menu-title">📊 Tổng quan</div>
+        <div class="menu-item active">Dashboard</div>
+        <div class="menu-item">Thống kê báo cáo</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">📦 Quản lý tồn kho</div>
+        <div class="menu-item">Danh sách NVL</div>
+        <div class="menu-item">Danh sách TP</div>
+        <div class="menu-item">Bao bì & phụ liệu</div>
+        <div class="menu-item">Kiểm kê tồn kho</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">📥 Nhập kho</div>
+        <div class="menu-item">Phiếu nhập NVL</div>
+        <div class="menu-item">Phiếu nhập TP</div>
+        <div class="menu-item">Lịch sử nhập kho</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">📤 Xuất kho</div>
+        <div class="menu-item">Phiếu xuất NVL</div>
+        <div class="menu-item">Phiếu xuất TP</div>
+        <div class="menu-item">Lịch sử xuất kho</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">📋 Yêu cầu vật tư</div>
+        <div class="menu-item">Danh sách YC</div>
+        <div class="menu-item">Tạo yêu cầu mới</div>
+        <div class="menu-item">Duyệt yêu cầu</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">🔬 Kiểm tra QC</div>
+        <div class="menu-item">Chờ kiểm tra</div>
+        <div class="menu-item">Đã kiểm tra</div>
+        <div class="menu-item">Biên bản QC</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">⚠️ SPKPH</div>
+        <div class="menu-item">Danh sách SPKPH</div>
+        <div class="menu-item">Xử lý SPKPH</div>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">🏢 Danh mục</div>
+        <div class="menu-item">Nhà cung cấp</div>
+        <div class="menu-item">Vị trí kho</div>
+        <div class="menu-item">Đơn vị tính</div>
+    </div>
+</div>
+
+<div class="content">
+    <header>
+        <span>📊 DASHBOARD - TỔNG QUAN HỆ THỐNG</span>
+        <div class="header-actions">
+            <button class="header-btn">👤 Admin</button>
+            <button class="header-btn">⚙️ Cài đặt</button>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Tổng quan quản lý kho</h1>
+            <button class="btn-add">
+                <span>+</span>
+                <span>Thêm mới</span>
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Tổng tồn kho NVL</span>
+                    <div class="stat-icon blue">📦</div>
+                </div>
+                <div class="stat-value">125</div>
+                <div class="stat-change up">↑ 12% so với tháng trước</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Chờ kiểm tra QC</span>
+                    <div class="stat-icon orange">🔬</div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-change down">↓ 3 so với hôm qua</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Xuất kho hôm nay</span>
+                    <div class="stat-icon green">📤</div>
+                </div>
+                <div class="stat-value">24</div>
+                <div class="stat-change up">↑ 8 phiếu xuất</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Cảnh báo hết hàng</span>
+                    <div class="stat-icon red">⚠️</div>
+                </div>
+                <div class="stat-value">7</div>
+                <div class="stat-change">Cần đặt hàng gấp</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="section-title">Thao tác nhanh</div>
+            <div class="quick-actions">
+                <div class="action-buttons">
+                    <button class="action-btn">
+                        <span>📥</span>
+                        <span>Tạo phiếu nhập</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>📤</span>
+                        <span>Tạo phiếu xuất</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>📋</span>
+                        <span>Yêu cầu vật tư</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>🔬</span>
+                        <span>Kiểm tra QC</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-title">Hoạt động gần đây</div>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Tìm kiếm theo mã phiếu, người tạo...">
+            </div>
+
+            <div class="toolbar">
+                <div></div>
+                <div class="toolbar-icons">
+                    <button class="icon-btn" title="Làm mới">↻</button>
+                    <button class="icon-btn" title="Lọc">⚙</button>
+                    <button class="icon-btn" title="Xuất Excel">↓</button>
+                    <button class="icon-btn" title="In">🖨</button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox"></th>
+                    <th style="width: 130px;">Mã phiếu</th>
+                    <th style="width: 150px;">Loại phiếu</th>
+                    <th style="width: 150px;">Ngày tạo</th>
+                    <th style="width: 150px;">Người tạo</th>
+                    <th style="width: 130px;">Trạng thái</th>
+                    <th>Ghi chú</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td><strong>NK-2025-001</strong></td>
+                    <td>Nhập kho NVL</td>
+                    <td>14/10/2025 09:30</td>
+                    <td>Nguyễn Văn A</td>
+                    <td><span class="status-badge status-info">Chờ kiểm tra</span></td>
+                    <td>Từ NCC Đại Phát</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td><strong>XK-2025-089</strong></td>
+                    <td>Xuất kho SX</td>
+                    <td>14/10/2025 08:15</td>
+                    <td>Trần Thị B</td>
+                    <td><span class="status-badge status-success">Hoàn thành</span></td>
+                    <td>Cấp cho PH-SXU</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td><strong>YC-2025-045</strong></td>
+                    <td>Yêu cầu vật tư</td>
+                    <td>13/10/2025 16:20</td>
+                    <td>Lê Văn C</td>
+                    <td><span class="status-badge status-warning">Đang xử lý</span></td>
+                    <td>Soạn hàng FEFO</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td><strong>QC-2025-023</strong></td>
+                    <td>Kiểm tra QC</td>
+                    <td>13/10/2025 14:00</td>
+                    <td>Phạm Thị D</td>
+                    <td><span class="status-badge status-success">Đạt</span></td>
+                    <td>Lô TP-20251013</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td><strong>SPKPH-2025-02</strong></td>
+                    <td>SPKPH</td>
+                    <td>13/10/2025 11:30</td>
+                    <td>Hoàng Văn E</td>
+                    <td><span class="status-badge status-danger">KHÔNG ĐẠT</span></td>
+                    <td>Chờ xử lý trả hàng</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.menu-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const section = title.parentElement;
+            section.classList.toggle('active');
+        });
+    });
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

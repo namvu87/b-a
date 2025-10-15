@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Định mức cấp phát - MISA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 240px;
+            background: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .menu-section {
+            border-bottom: 1px solid #eee;
+        }
+        .menu-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #a32718;
+            padding: 12px 16px;
+            cursor: pointer;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-title:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item {
+            font-size: 13px;
+            color: #555;
+            padding: 6px 32px;
+            cursor: pointer;
+            display: none;
+        }
+        .menu-item:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item.active {
+            background-color: #f1e8e3;
+            color: #a32718;
+            font-weight: 600;
+        }
+        .menu-section.active .menu-item {
+            display: block;
+        }
+        .menu-section.active .menu-title::after {
+            content: "−";
+        }
+        .menu-title::after {
+            content: "+";
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            background: #a32718;
+            color: white;
+            padding: 16px 24px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 4px solid #ecc67d;
+        }
+        .main-content {
+            flex: 1;
+            background: #f5f5f5;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 4px;
+        }
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .btn-add {
+            background-color: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-add:hover {
+            background-color: #8a2114;
+        }
+        .content-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            background: #fff;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+        .search-icon {
+            color: #999;
+            margin-right: 8px;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toolbar-icons {
+            display: flex;
+            gap: 8px;
+        }
+        .icon-btn {
+            background: #a32718;
+            border: none;
+            color: #ffffff;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: #8a2114;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #fff;
+        }
+        thead {
+            background-color: #f9f9f9;
+        }
+        th {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+        th input[type="checkbox"] {
+            cursor: pointer;
+        }
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            color: #555;
+        }
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            color: #333;
+        }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .radio-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #00a389;
+        }
+        .radio-label {
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+        .form-group {
+            margin-bottom: 0;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-label .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: #00a389;
+            border-width: 2px;
+            padding: 9px 11px;
+        }
+        .form-input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        .form-select:focus {
+            border-color: #00a389;
+        }
+        .input-with-action {
+            display: flex;
+            gap: 8px;
+        }
+        .input-with-action .form-select {
+            flex: 1;
+        }
+        .btn-icon {
+            background: #a32718;
+            border: none;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover {
+            background: #8a2114;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .btn-cancel {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-cancel:hover {
+            background: #8a2114;
+        }
+        .btn-save {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-save:hover {
+            background: #8a2114;
+        }
+        .btn-save-add {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-save-add:hover {
+            background: #8a2114;
+        }
+        .collapse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+        .collapse-header:hover {
+            background: #f0f0f0;
+        }
+        .collapse-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .collapse-icon {
+            color: #00a389;
+            font-size: 18px;
+        }
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .collapse-content.active {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="menu-section">
+        <div class="menu-title">Tổng quan</div>
+        <div class="menu-item">Thống kê</div>
+    </div>
+    <div class="menu-section active">
+        <div class="menu-title">Danh mục</div>
+        <div class="menu-item">Cấu trúc bộ cục</div>
+        <div class="menu-item">Loại tài sản</div>
+        <div class="menu-item">Nhóm tài sản</div>
+        <div class="menu-item">Vị trí tài sản</div>
+        <div class="menu-item">Nhà cung cấp</div>
+        <div class="menu-item active">Định mức cấp phát</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Vật tư</div>
+        <div class="menu-item">Danh sách vật tư</div>
+        <div class="menu-item">Nhập xuất vật tư</div>
+        <div class="menu-item">Kiểm kê</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Linh kiện</div>
+        <div class="menu-item active">Danh sách linh kiện</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title ">Tài sản</div>
+        <div class="menu-item ">Danh sách tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Cấp phát - Thu hồi</div>
+        <div class="menu-item ">Nhân viên</div>
+        <div class="menu-item ">Đơn vị</div>
+        <div class="menu-item ">Vị trí tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Điều chuyển</div>
+        <div class="menu-item">Danh sách điều chuyển</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Mất - Hủy - Thanh lý</div>
+        <div class="menu-item">Tài sản mất</div>
+        <div class="menu-item ">Tài sản hủy</div>
+        <div class="menu-item ">Đề nghị thanh lý</div>
+        <div class="menu-item ">Tài sản thanh lý</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm kê</div>
+        <div class="menu-item">Kiểm kê chi tiết</div>
+        <div class="menu-item">Kiểm kê số lượng</div>
+        <div class="menu-item">Tổng hợp kiểm kê chi tiết</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm đếm</div>
+        <div class="menu-item">Lịch kiểm đếm</div>
+        <div class="menu-item">Tổng hợp kiểm đếm</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Khấu hao - Phân bổ</div>
+        <div class="menu-item ">Bảng tính khấu hao</div>
+        <div class="menu-item ">Bảng tính phân bổ</div>
+        <div class="menu-item ">Đánh giá lại tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Quá trình sử dụng</div>
+        <div class="menu-item ">Danh sách sử dụng</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Phân quyền</div>
+        <div class="menu-item">Người dùng</div>
+        <div class="menu-item">Vai trò</div>
+    </div>
+</div>
+
+<div class="content">
+    <header>Định mức cấp phát</header>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Định mức cấp phát</h1>
+            <button class="btn-add" id="addQuotaBtn">
+                + Thêm mới
+            </button>
+        </div>
+
+        <div class="content-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên định mức...">
+            </div>
+
+            <table id="dataTable">
+                <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox"></th>
+                    <th style="width: 150px;">Loại định mức</th>
+                    <th style="width: 200px;">Đơn vị/Vị trí</th>
+                    <th style="width: 200px;">Tên định mức cấp phát</th>
+                    <th style="width: 150px;">Mô tả</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Vị trí công việc</td>
+                    <td>Phòng Kế toán</td>
+                    <td>Định mức văn phòng kế toán</td>
+                    <td>Bàn ghế, máy tính, máy in</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Vị trí sử dụng</td>
+                    <td>Phòng IT - Tầng 3</td>
+                    <td>Định mức phòng IT</td>
+                    <td>Máy chủ, thiết bị mạng</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Vị trí công việc</td>
+                    <td>Phòng Kinh doanh</td>
+                    <td>Định mức nhân viên kinh doanh</td>
+                    <td>Laptop, điện thoại di động</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm định mức -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Thêm định mức cấp phát</h2>
+            <button class="modal-close" id="closeModal">×</button>
+        </div>
+
+        <div class="modal-body">
+            <form id="quotaForm">
+                <div class="form-group">
+                    <label class="form-label" style="margin-bottom: 12px;">Loại định mức</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" class="radio-input" id="typeWorkplace" name="quotaType" value="workplace" checked>
+                            <label class="radio-label" for="typeWorkplace">Vị trí công việc</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" class="radio-input" id="typeLocation" name="quotaType" value="location">
+                            <label class="radio-label" for="typeLocation">Vị trí sử dụng</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">Thông tin vị trí công việc</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Đơn vị công tác <span class="required">*</span>
+                        </label>
+                        <select class="form-select" id="workUnit" required>
+                            <option value="">Chọn đơn vị công tác</option>
+                            <option value="Công ty cổ phần sản xuất và thương mại Đại Long" selected>Công ty cổ phần sản xuất và thương mại Đại Long</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mô tả</label>
+                        <input type="text" class="form-input" id="description" placeholder="Nhập mô tả">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Mã vị trí công việc <span class="required">*</span>
+                        </label>
+                        <select class="form-select" id="workplaceCode" required>
+                            <option value="">Chọn vị trí công việc</option>
+                            <option value="PKT">Phòng Kế toán</option>
+                            <option value="PKD">Phòng Kinh doanh</option>
+                            <option value="PIT">Phòng IT</option>
+                            <option value="HCNS">Phòng Hành chính nhân sự</option>
+                        </select>
+                    </div>
+                    <div class="form-group"></div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="form-label">Tên vị trí công việc</label>
+                        <input type="text" class="form-input" id="workplaceName" placeholder="Tự động điền từ mã vị trí" disabled>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Tên định mức cấp phát <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="quotaName" placeholder="Nhập tên định mức cấp phát" required>
+                    </div>
+                </div>
+
+                <div class="collapse-header" id="collapseToggle">
+                    <div class="collapse-title">
+                        <span class="collapse-icon">✓</span>
+                        <span>Thông tin định mức</span>
+                    </div>
+                    <span>▼</span>
+                </div>
+
+                <div class="collapse-content active" id="collapseContent">
+                    <p style="color: #666; font-size: 13px; margin-bottom: 12px;">
+                        Danh sách các tài sản được cấp phát theo định mức này
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel" id="cancelBtn">Hủy</button>
+            <button class="btn-save" id="saveBtn">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data storage
+    let quotas = [
+        {
+            type: 'Vị trí công việc',
+            unit: 'Phòng Kế toán',
+            name: 'Định mức văn phòng kế toán',
+            description: 'Bàn ghế, máy tính, máy in'
+        },
+        {
+            type: 'Vị trí sử dụng',
+            unit: 'Phòng IT - Tầng 3',
+            name: 'Định mức phòng IT',
+            description: 'Máy chủ, thiết bị mạng'
+        },
+        {
+            type: 'Vị trí công việc',
+            unit: 'Phòng Kinh doanh',
+            name: 'Định mức nhân viên kinh doanh',
+            description: 'Laptop, điện thoại di động'
+        }
+    ];
+
+    // Workplace data
+    const workplaces = {
+        'PKT': 'Phòng Kế toán',
+        'PKD': 'Phòng Kinh doanh',
+        'PIT': 'Phòng IT',
+        'HCNS': 'Phòng Hành chính nhân sự'
+    };
+
+    // Toggle menu
+    document.querySelectorAll('.menu-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const section = title.parentElement;
+            section.classList.toggle('active');
+        });
+    });
+
+    // Modal controls
+    const modalOverlay = document.getElementById('modalOverlay');
+    const addBtn = document.getElementById('addQuotaBtn');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const saveAddBtn = document.getElementById('saveAddBtn');
+    const quotaForm = document.getElementById('quotaForm');
+
+    function openModal() {
+        modalOverlay.classList.add('active');
+        quotaForm.reset();
+        document.getElementById('typeWorkplace').checked = true;
+        updateFormByType();
+    }
+
+    function closeModalFunc() {
+        modalOverlay.classList.remove('active');
+    }
+
+    addBtn.addEventListener('click', openModal);
+    closeModal.addEventListener('click', closeModalFunc);
+    cancelBtn.addEventListener('click', closeModalFunc);
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            closeModalFunc();
+        }
+    });
+
+    // Radio button change
+    document.querySelectorAll('input[name="quotaType"]').forEach(radio => {
+        radio.addEventListener('change', updateFormByType);
+    });
+
+    function updateFormByType() {
+        const type = document.querySelector('input[name="quotaType"]:checked').value;
+        const sectionTitle = document.querySelector('.section-title');
+
+        if (type === 'workplace') {
+            sectionTitle.textContent = 'Thông tin vị trí công việc';
+        } else {
+            sectionTitle.textContent = 'Thông tin vị trí sử dụng';
+        }
+    }
+
+    // Auto fill workplace name
+    document.getElementById('workplaceCode').addEventListener('change', (e) => {
+        const code = e.target.value;
+        const nameInput = document.getElementById('workplaceName');
+        nameInput.value = workplaces[code] || '';
+    });
+
+    // Collapse toggle
+    document.getElementById('collapseToggle').addEventListener('click', () => {
+        const content = document.getElementById('collapseContent');
+        content.classList.toggle('active');
+    });
+
+    // Save quota
+    function saveQuota(addNew = false) {
+        const type = document.querySelector('input[name="quotaType"]:checked').value;
+        const workUnit = document.getElementById('workUnit').value;
+        const workplaceCode = document.getElementById('workplaceCode').value;
+        const quotaName = document.getElementById('quotaName').value.trim();
+        const description = document.getElementById('description').value.trim();
+
+        if (!workUnit || !workplaceCode || !quotaName) {
+            alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+            return;
+        }
+
+        const quota = {
+            type: type === 'workplace' ? 'Vị trí công việc' : 'Vị trí sử dụng',
+            unit: workplaces[workplaceCode] || workplaceCode,
+            name: quotaName,
+            description: description || '-'
+        };
+
+        quotas.push(quota);
+        renderTable();
+
+        if (addNew) {
+            quotaForm.reset();
+            document.getElementById('typeWorkplace').checked = true;
+            updateFormByType();
+        } else {
+            closeModalFunc();
+        }
+    }
+
+    saveBtn.addEventListener('click', () => saveQuota(false));
+    saveAddBtn.addEventListener('click', () => saveQuota(true));
+
+    // Render table
+    function renderTable() {
+        const tbody = document.querySelector('#dataTable tbody');
+
+        if (quotas.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        <div style="text-align: center; padding: 60px 20px; color: #999;">
+                            <div style="font-size: 64px; margin-bottom: 16px; opacity: 0.3;">📋</div>
+                            <div style="font-size: 14px;">Không có dữ liệu</div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = quotas.map(quota => `
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>${quota.type}</td>
+                <td>${quota.unit}</td>
+                <td>${quota.name}</td>
+                <td>${quota.description}</td>
+            </tr>
+        `).join('');
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#dataTable tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Initialize
+    renderTable();
+</script>
+</body>
+</html>

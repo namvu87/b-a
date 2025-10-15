@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách vật tư - MISA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 240px;
+            background: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .menu-section {
+            border-bottom: 1px solid #eee;
+        }
+        .menu-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #a32718;
+            padding: 12px 16px;
+            cursor: pointer;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-title:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item {
+            font-size: 13px;
+            color: #555;
+            padding: 6px 32px;
+            cursor: pointer;
+            display: none;
+        }
+        .menu-item:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item.active {
+            background-color: #f1e8e3;
+            color: #a32718;
+            font-weight: 600;
+        }
+        .menu-section.active .menu-item {
+            display: block;
+        }
+        .menu-section.active .menu-title::after {
+            content: "−";
+        }
+        .menu-title::after {
+            content: "+";
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            background: #a32718;
+            color: white;
+            padding: 16px 24px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 4px solid #ecc67d;
+        }
+        .main-content {
+            flex: 1;
+            background: #f5f5f5;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 4px;
+        }
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .btn-add {
+            background-color: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-add:hover {
+            background-color: #8a2114;
+        }
+        .content-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            background: #fff;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+        .search-icon {
+            color: #999;
+            margin-right: 8px;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toolbar-icons {
+            display: flex;
+            gap: 8px;
+        }
+        .icon-btn {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #666;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #bbb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #fff;
+        }
+        thead {
+            background-color: #f0f0f0;
+        }
+        th {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+        th input[type="checkbox"] {
+            cursor: pointer;
+        }
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            color: #555;
+        }
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        .material-code {
+            color: #a32718;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .material-code:hover {
+            text-decoration: underline;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-below {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1100px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f9f9;
+        }
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            color: #333;
+        }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+        .form-group {
+            margin-bottom: 0;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-label .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: #a32718;
+            border-width: 2px;
+            padding: 9px 11px;
+        }
+        .form-input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            background: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        .form-select:focus {
+            border-color: #a32718;
+            border-width: 2px;
+            padding: 9px 11px 9px 11px;
+            padding-right: 35px;
+        }
+        .input-with-action {
+            display: flex;
+            gap: 8px;
+        }
+        .input-with-action .form-select,
+        .input-with-action .form-input {
+            flex: 1;
+        }
+        .btn-icon {
+            background: #fff;
+            border: 1px solid #ccc;
+            color: #666;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #f9f9f9;
+        }
+        .btn-cancel {
+            background: #fff;
+            color: #666;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-cancel:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        .btn-save {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-save:hover {
+            background: #8a2114;
+        }
+        .btn-save-add {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-save-add:hover {
+            background: #8a2114;
+        }
+        .collapse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            margin-top: 24px;
+        }
+        .collapse-header:hover {
+            background: #f0f0f0;
+        }
+        .collapse-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .collapse-icon {
+            color: #a32718;
+            font-size: 18px;
+        }
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .collapse-content.active {
+            max-height: 800px;
+        }
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+        .inventory-table thead {
+            background-color: #f0f0f0;
+        }
+        .inventory-table th {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 12px;
+        }
+        .inventory-table td {
+            border: 1px solid #e0e0e0;
+            padding: 8px 10px;
+            color: #555;
+        }
+        .inventory-table input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .btn-add-row {
+            background: transparent;
+            border: none;
+            color: #a32718;
+            padding: 8px 0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .btn-add-row:hover {
+            color: #8a2114;
+        }
+        .btn-delete-row {
+            background: transparent;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px 6px;
+        }
+        .btn-delete-row:hover {
+            color: #a71d2a;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+        .empty-state-text {
+            font-size: 14px;
+        }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-edit, .btn-delete {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .btn-edit:hover {
+            color: #a32718;
+        }
+        .btn-delete:hover {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="menu-section">
+        <div class="menu-title">Tổng quan</div>
+        <div class="menu-item">Thống kê</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Danh mục</div>
+        <div class="menu-item">Cấu trúc bộ cục</div>
+        <div class="menu-item">Loại tài sản</div>
+        <div class="menu-item">Nhóm tài sản</div>
+        <div class="menu-item">Vị trí tài sản</div>
+        <div class="menu-item">Nhà cung cấp</div>
+        <div class="menu-item">Định mức cấp phát</div>
+    </div>
+    <div class="menu-section active">
+        <div class="menu-title">Vật tư</div>
+        <div class="menu-item ">Loại vật tư</div>
+        <div class="menu-item ">Đơn vị tính</div>
+        <div class="menu-item active">Danh sách vật tư</div>
+        <div class="menu-item">Nhập xuất vật tư</div>
+        <div class="menu-item">Kiểm kê</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Linh kiện</div>
+        <div class="menu-item">Danh sách vật tư</div>
+        <div class="menu-item">Danh sách linh kiện</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Tài sản</div>
+        <div class="menu-item">Danh sách tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Cấp phát - Thu hồi</div>
+        <div class="menu-item">Nhân viên</div>
+        <div class="menu-item">Đơn vị</div>
+        <div class="menu-item">Vị trí tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Điều chuyển</div>
+        <div class="menu-item">Danh sách điều chuyển</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Mất - Hủy - Thanh lý</div>
+        <div class="menu-item">Tài sản mất</div>
+        <div class="menu-item">Tài sản hủy</div>
+        <div class="menu-item">Đề nghị thanh lý</div>
+        <div class="menu-item">Tài sản thanh lý</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm kê</div>
+        <div class="menu-item">Kiểm kê chi tiết</div>
+        <div class="menu-item">Kiểm kê số lượng</div>
+        <div class="menu-item">Tổng hợp kiểm kê chi tiết</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm đếm</div>
+        <div class="menu-item">Lịch kiểm đếm</div>
+        <div class="menu-item">Tổng hợp kiểm đếm</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Khấu hao - Phân bổ</div>
+        <div class="menu-item">Bảng tính khấu hao</div>
+        <div class="menu-item">Bảng tính phân bổ</div>
+        <div class="menu-item">Đánh giá lại tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Quá trình sử dụng</div>
+        <div class="menu-item">Danh sách sử dụng</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Phân quyền</div>
+        <div class="menu-item">Người dùng</div>
+        <div class="menu-item">Vai trò</div>
+    </div>
+</div>
+
+<div class="content">
+    <header>Danh sách vật tư</header>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Danh sách vật tư</h1>
+            <button class="btn-add" id="addMaterialBtn">
+                + Thêm vật tư
+            </button>
+        </div>
+
+        <div class="content-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Nhập tên, mã vật tư để tìm kiếm">
+            </div>
+
+
+
+            <table id="dataTable">
+                <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" id="selectAll"></th>
+                    <th style="width: 120px;">Mã vật tư</th>
+                    <th style="width: 220px;">Tên vật tư</th>
+                    <th style="width: 150px;">Loại vật tư</th>
+                    <th style="width: 120px;">Đơn vị tính</th>
+                    <th style="width: 100px;">SL tồn</th>
+                    <th style="width: 100px;">Định mức tồn</th>
+                    <th style="width: 180px;">Đơn vị quản lý</th>
+                    <th style="width: 100px;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm/Sửa vật tư -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle">Thêm mới vật tư</h2>
+            <button class="modal-close" id="closeModal">×</button>
+        </div>
+
+        <div class="modal-body">
+            <form id="materialForm">
+                <div class="section-title">Thông tin chung</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Đơn vị quản lý <span class="required">*</span>
+                        </label>
+                        <div class="input-with-action">
+                            <select class="form-select" id="managementUnit" required>
+                                <option value="">Chọn đơn vị quản lý</option>
+                                <option value="CÔNG TY CỔ PHẦN CÔNG NGHỆ BOTA" selected>Công ty cổ phần sản xuất và thương mại Đại Long</option>
+                                <option value="Chi nhánh Hà Nội">Chi nhánh Hà Nội</option>
+                                <option value="Chi nhánh TP.HCM">Chi nhánh TP.HCM</option>
+                            </select>
+                            <button type="button" class="btn-icon" title="Thêm đơn vị">⋯</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Đơn vị tính</label>
+                        <div class="input-with-action">
+                            <select class="form-select" id="unit">
+                                <option value="">Chọn đơn vị tính</option>
+                                <option value="Cái">Cái</option>
+                                <option value="Chiếc">Chiếc</option>
+                                <option value="Hộp">Hộp</option>
+                                <option value="Bộ">Bộ</option>
+                                <option value="Kg">Kg</option>
+                                <option value="Lít">Lít</option>
+                            </select>
+                            <button type="button" class="btn-icon" title="Thêm đơn vị tính">⋯</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Mã vật tư <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="materialCode" placeholder="Nhập mã vật tư" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nguồn gốc</label>
+                        <select class="form-select" id="origin">
+                            <option value="">Chọn nguồn gốc</option>
+                            <option value="Mua mới">Mua mới</option>
+                            <option value="Nhập khẩu">Nhập khẩu</option>
+                            <option value="Tự sản xuất">Tự sản xuất</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Tên vật tư <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" id="materialName" placeholder="Nhập tên vật tư" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Loại vật tư</label>
+                        <div class="input-with-action">
+                            <select class="form-select" id="materialType">
+                                <option value="">Chọn loại vật tư</option>
+                                <option value="Lương thực">Lương thực</option>
+                                <option value="Văn phòng phẩm">Văn phòng phẩm</option>
+                                <option value="Điện tử">Điện tử</option>
+                                <option value="Hóa chất">Hóa chất</option>
+                            </select>
+                            <button type="button" class="btn-icon" title="Thêm loại vật tư">⋯</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Định mức tồn</label>
+                        <input type="number" class="form-input" id="inventoryQuota" placeholder="0" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Ngày thêm <span class="required">*</span></label>
+                        <input type="date" class="form-input" id="addDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quy cách vật tư</label>
+                        <input type="text" class="form-input" id="specification" placeholder="Nhập quy cách">
+                    </div>
+                </div>
+
+                <!-- Khai báo số tồn ban đầu -->
+                <div class="collapse-header" id="collapseToggle">
+                    <div class="collapse-title">
+                        <span class="collapse-icon">✓</span>
+                        <span>Khai báo số tồn ban đầu</span>
+                    </div>
+                    <span>▼</span>
+                </div>
+
+                <div class="collapse-content active" id="collapseContent">
+                    <p style="color: #666; font-size: 13px; margin-bottom: 12px;">
+                        Danh sách số tồn ban đầu theo từng vị trí
+                    </p>
+
+                    <table class="inventory-table">
+                        <thead>
+                        <tr>
+                            <th style="width: 50px;">STT</th>
+                            <th style="width: 200px;">Vị trí</th>
+                            <th style="width: 120px;">Số lượng</th>
+                            <th style="width: 150px;">Đơn giá</th>
+                            <th style="width: 150px;">Thành tiền</th>
+                            <th style="width: 60px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: #999; padding: 20px;">
+                                Chưa có dữ liệu
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn-add-row" id="addInventoryRow">
+                        + Thêm dòng
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancelBtn">Hủy</button>
+            <button type="button" class="btn-save" id="saveBtn">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Data storage
+        let materials = [
+            {
+                id: 1,
+                code: 'GAO',
+                name: 'Gạo',
+                type: 'Lương thực',
+                unit: 'Bao',
+                quantity: 0,
+                quota: 0,
+                managementUnit: 'CÔNG TY CỔ PHẦN CÔNG NGHỆ BOTA',
+                status: 'Dưới định mức'
+            }
+        ];
+
+        let inventoryRows = [];
+        let editingId = null;
+
+        // Toggle menu
+        $('.menu-title').on('click', function() {
+            $(this).parent().toggleClass('active');
+        });
+
+        // Modal controls
+        function openModal(id = null) {
+            editingId = id;
+            $('#modalOverlay').addClass('active');
+
+            if (id) {
+                $('#modalTitle').text('Sửa vật tư');
+                const material = materials.find(m => m.id === id);
+                if (material) {
+                    $('#managementUnit').val(material.managementUnit);
+                    $('#materialCode').val(material.code);
+                    $('#materialName').val(material.name);
+                    $('#materialType').val(material.type);
+                    $('#unit').val(material.unit);
+                    $('#inventoryQuota').val(material.quota);
+                    $('#addDate').val(new Date().toISOString().split('T')[0]);
+                }
+            } else {
+                $('#modalTitle').text('Thêm mới vật tư');
+                $('#materialForm')[0].reset();
+                $('#addDate').val(new Date().toISOString().split('T')[0]);
+                inventoryRows = [];
+                renderInventoryTable();
+            }
+        }
+
+        function closeModal() {
+            $('#modalOverlay').removeClass('active');
+            editingId = null;
+            inventoryRows = [];
+        }
+
+        $('#addMaterialBtn').on('click', () => openModal());
+        $('#closeModal, #cancelBtn').on('click', closeModal);
+
+        $('#modalOverlay').on('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Collapse toggle
+        $('#collapseToggle').on('click', function() {
+            $('#collapseContent').toggleClass('active');
+        });
+
+        // Add inventory row
+        $('#addInventoryRow').on('click', function() {
+            const newRow = {
+                id: Date.now(),
+                location: '',
+                quantity: 0,
+                unitPrice: 0,
+                total: 0
+            };
+            inventoryRows.push(newRow);
+            renderInventoryTable();
+        });
+
+        // Render inventory table
+        function renderInventoryTable() {
+            const tbody = $('#inventoryTableBody');
+
+            if (inventoryRows.length === 0) {
+                tbody.html(`
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #999; padding: 20px;">
+                            Chưa có dữ liệu
+                        </td>
+                    </tr>
+                `);
+                return;
+            }
+
+            let html = '';
+            inventoryRows.forEach((row, index) => {
+                html += `
+                    <tr>
+                        <td style="text-align: center;">${index + 1}</td>
+                        <td>
+                            <input type="text" class="inventory-location" data-id="${row.id}"
+                                   value="${row.location}" placeholder="Nhập vị trí">
+                        </td>
+                        <td>
+                            <input type="number" class="inventory-quantity" data-id="${row.id}"
+                                   value="${row.quantity}" min="0" placeholder="0">
+                        </td>
+                        <td>
+                            <input type="number" class="inventory-price" data-id="${row.id}"
+                                   value="${row.unitPrice}" min="0" placeholder="0">
+                        </td>
+                        <td style="text-align: right; font-weight: 500;">
+                            ${(row.quantity * row.unitPrice).toLocaleString('vi-VN')}
+                        </td>
+                        <td style="text-align: center;">
+                            <button type="button" class="btn-delete-row" data-id="${row.id}">×</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.html(html);
+        }
+
+        // Handle inventory table inputs
+        $(document).on('input', '.inventory-location', function() {
+            const id = $(this).data('id');
+            const row = inventoryRows.find(r => r.id === id);
+            if (row) row.location = $(this).val();
+        });
+
+        $(document).on('input', '.inventory-quantity, .inventory-price', function() {
+            const id = $(this).data('id');
+            const row = inventoryRows.find(r => r.id === id);
+            if (row) {
+                if ($(this).hasClass('inventory-quantity')) {
+                    row.quantity = parseFloat($(this).val()) || 0;
+                } else {
+                    row.unitPrice = parseFloat($(this).val()) || 0;
+                }
+                row.total = row.quantity * row.unitPrice;
+                renderInventoryTable();
+            }
+        });
+
+        $(document).on('click', '.btn-delete-row', function() {
+            const id = $(this).data('id');
+            inventoryRows = inventoryRows.filter(r => r.id !== id);
+            renderInventoryTable();
+        });
+
+        // Save material
+        function saveMaterial(addNew = false) {
+            const managementUnit = $('#managementUnit').val();
+            const code = $('#materialCode').val().trim();
+            const name = $('#materialName').val().trim();
+            const type = $('#materialType').val();
+            const unit = $('#unit').val();
+            const quota = parseInt($('#inventoryQuota').val()) || 0;
+
+            if (!managementUnit || !code || !name) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            // Calculate total quantity from inventory rows
+            const totalQuantity = inventoryRows.reduce((sum, row) => sum + row.quantity, 0);
+
+            if (editingId) {
+                const material = materials.find(m => m.id === editingId);
+                if (material) {
+                    material.managementUnit = managementUnit;
+                    material.code = code;
+                    material.name = name;
+                    material.type = type || '-';
+                    material.unit = unit || '-';
+                    material.quota = quota;
+                    material.quantity = totalQuantity;
+                    material.status = totalQuantity < quota ? 'Dưới định mức' : 'Đủ định mức';
+                }
+            } else {
+                const newMaterial = {
+                    id: Date.now(),
+                    managementUnit,
+                    code,
+                    name,
+                    type: type || '-',
+                    unit: unit || '-',
+                    quantity: totalQuantity,
+                    quota,
+                    status: totalQuantity < quota ? 'Dưới định mức' : 'Đủ định mức'
+                };
+                materials.push(newMaterial);
+            }
+
+            renderTable();
+
+            if (addNew) {
+                $('#materialForm')[0].reset();
+                $('#addDate').val(new Date().toISOString().split('T')[0]);
+                inventoryRows = [];
+                renderInventoryTable();
+                editingId = null;
+                $('#modalTitle').text('Thêm mới vật tư');
+            } else {
+                closeModal();
+            }
+        }
+
+        $('#saveBtn').on('click', () => saveMaterial(false));
+        $('#saveAddBtn').on('click', () => saveMaterial(true));
+
+        // Render main table
+        function renderTable() {
+            const tbody = $('#tableBody');
+
+            if (materials.length === 0) {
+                tbody.html(`
+                    <tr>
+                        <td colspan="9">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📦</div>
+                                <div class="empty-state-text">Không có dữ liệu</div>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+                return;
+            }
+
+            let html = '';
+            materials.forEach(material => {
+                const statusClass = material.quantity < material.quota ? 'status-below' : '';
+                html += `
+                    <tr>
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td>
+                            <span class="material-code" data-id="${material.id}">${material.code}</span>
+                        </td>
+                        <td>${material.name}</td>
+                        <td>${material.type}</td>
+                        <td>${material.unit}</td>
+                        <td style="text-align: right;">${material.quantity}</td>
+                        <td style="text-align: right;">${material.quota}</td>
+                        <td>${material.managementUnit}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-edit" data-id="${material.id}" title="Sửa">✎</button>
+                                <button class="btn-delete" data-id="${material.id}" title="Xóa">🗑</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.html(html);
+        }
+
+        // Edit material
+        $(document).on('click', '.btn-edit, .material-code', function() {
+            const id = $(this).data('id');
+            openModal(id);
+        });
+
+        // Delete material
+        $(document).on('click', '.btn-delete', function() {
+            const id = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xóa vật tư này?')) {
+                materials = materials.filter(m => m.id !== id);
+                renderTable();
+            }
+        });
+
+        // Search functionality
+        $('#searchInput').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('#tableBody tr').each(function() {
+                const text = $(this).text().toLowerCase();
+                $(this).toggle(text.includes(searchTerm));
+            });
+        });
+
+        // Select all checkbox
+        $('#selectAll').on('change', function() {
+            $('.row-checkbox').prop('checked', $(this).prop('checked'));
+        });
+
+        // Refresh button
+        $('#refreshBtn').on('click', function() {
+            renderTable();
+            $('#searchInput').val('');
+        });
+
+        // Initialize
+        renderTable();
+    });
+</script>
+</body>
+</html>

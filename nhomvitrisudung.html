@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhóm vị trí sử dụng - MISA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 240px;
+            background: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .menu-section {
+            border-bottom: 1px solid #eee;
+        }
+        .menu-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #a32718;
+            padding: 12px 16px;
+            cursor: pointer;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-title:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item {
+            font-size: 13px;
+            color: #555;
+            padding: 6px 32px;
+            cursor: pointer;
+            display: none;
+        }
+        .menu-item:hover {
+            background-color: #f1e8e3;
+        }
+        .menu-item.active {
+            background-color: #f1e8e3;
+            color: #a32718;
+            font-weight: 600;
+        }
+        .menu-section.active .menu-item {
+            display: block;
+        }
+        .menu-section.active .menu-title::after {
+            content: "−";
+        }
+        .menu-title::after {
+            content: "+";
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            background: #a32718;
+            color: white;
+            padding: 16px 24px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 4px solid #ecc67d;
+        }
+        .main-content {
+            flex: 1;
+            background: #f5f5f5;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 4px;
+        }
+        .page-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .btn-add {
+            background-color: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-add:hover {
+            background-color: #008c73;
+        }
+        .content-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            background: #fff;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+        .search-icon {
+            color: #999;
+            margin-right: 8px;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toolbar-icons {
+            display: flex;
+            gap: 8px;
+        }
+        .icon-btn {
+            background: #00a389;
+            border: none;
+            color: #ffffff;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: #008c73;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #fff;
+        }
+        thead {
+            background-color: #f9f9f9;
+        }
+        th {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+        th input[type="checkbox"] {
+            cursor: pointer;
+        }
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            color: #555;
+        }
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+        .empty-state-text {
+            font-size: 14px;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            color: #333;
+        }
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-label .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: #00a389;
+            border-width: 2px;
+            padding: 9px 11px;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .btn-cancel {
+            background: #ffffff;
+            color: #333333;
+            border: 1px solid #d0d0d0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-cancel:hover {
+            background: #f5f5f5;
+        }
+        .btn-save {
+            background: #a32718;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-save:hover {
+            background: #008c73;
+        }
+        .btn-save-add {
+            background: #ffffff;
+            color: #333333;
+            border: 1px solid #d0d0d0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-save-add:hover {
+            background: #f5f5f5;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .btn-action {
+            background: #a32718;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-action:hover {
+            background: #008c73;
+        }
+        .btn-action.btn-delete {
+            background: #dc3545;
+        }
+        .btn-action.btn-delete:hover {
+            background: #c82333;
+        }
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .pagination-info {
+            font-size: 13px;
+            color: #666;
+        }
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .page-select {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .page-nav {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .page-nav:hover {
+            background: #e0e0e0;
+        }
+        .page-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="menu-section">
+        <div class="menu-title">Tổng quan</div>
+        <div class="menu-item">Thống kê</div>
+    </div>
+    <div class="menu-section active">
+        <div class="menu-title">Danh mục</div>
+        <div class="menu-item">Cấu trúc bộ cục</div>
+        <div class="menu-item">Loại tài sản</div>
+        <div class="menu-item">Nhóm tài sản</div>
+        <div class="menu-item">Vị trí tài sản</div>
+        <div class="menu-item">Nhà cung cấp</div>
+        <div class="menu-item">Nhóm nhà cung cấp</div>
+        <div class="menu-item active">Nhóm vị trí sử dụng</div>
+        <div class="menu-item">Định mức cấp phát</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Vật tư</div>
+        <div class="menu-item">Danh sách vật tư</div>
+        <div class="menu-item">Nhập xuất vật tư</div>
+        <div class="menu-item">Kiểm kê</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Linh kiện</div>
+        <div class="menu-item">Danh sách vật tư</div>
+        <div class="menu-item">Danh sách linh kiện</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Tài sản</div>
+        <div class="menu-item">Danh sách tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Cấp phát - Thu hồi</div>
+        <div class="menu-item">Nhân viên</div>
+        <div class="menu-item">Đơn vị</div>
+        <div class="menu-item">Vị trí tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Điều chuyển</div>
+        <div class="menu-item">Danh sách điều chuyển</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Mất - Hủy - Thanh lý</div>
+        <div class="menu-item">Tài sản mất</div>
+        <div class="menu-item">Tài sản hủy</div>
+        <div class="menu-item">Đề nghị thanh lý</div>
+        <div class="menu-item">Tài sản thanh lý</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm kê</div>
+        <div class="menu-item">Kiểm kê chi tiết</div>
+        <div class="menu-item">Kiểm kê số lượng</div>
+        <div class="menu-item">Tổng hợp kiểm kê chi tiết</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Kiểm đếm</div>
+        <div class="menu-item">Lịch kiểm đếm</div>
+        <div class="menu-item">Tổng hợp kiểm đếm</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Khấu hao - Phân bổ</div>
+        <div class="menu-item">Bảng tính khấu hao</div>
+        <div class="menu-item">Bảng tính phân bổ</div>
+        <div class="menu-item">Đánh giá lại tài sản</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Quá trình sử dụng</div>
+        <div class="menu-item">Danh sách sử dụng</div>
+    </div>
+    <div class="menu-section">
+        <div class="menu-title">Phân quyền</div>
+        <div class="menu-item">Người dùng</div>
+        <div class="menu-item">Vai trò</div>
+    </div>
+</div>
+
+<div class="content">
+    <header>Nhóm vị trí sử dụng</header>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Nhóm vị trí sử dụng</h1>
+            <button class="btn-add" id="addGroupBtn">
+                + Thêm mới
+            </button>
+        </div>
+
+        <div class="content-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Nhập tên hoặc mô tả để tìm...">
+            </div>
+
+
+
+            <table id="dataTable">
+                <thead>
+                <tr>
+                    <th style="width: 300px;">Nhóm vị trí sử dụng</th>
+                    <th style="width: 150px;">Mô tả</th>
+                    <th style="width: 100px;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📄</div>
+                            <div class="empty-state-text">Không có dữ liệu</div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thêm/Sửa nhóm vị trí sử dụng -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle">Thêm mới nhóm vị trí sử dụng</h2>
+            <button class="modal-close" id="closeModal">×</button>
+        </div>
+
+        <div class="modal-body">
+            <form id="groupForm">
+                <div class="form-group">
+                    <label class="form-label">
+                        Nhóm vị trí sử dụng <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-input" id="groupName" placeholder="Nhập tên nhóm vị trí sử dụng" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mô tả</label>
+                    <input type="text" class="form-input" id="groupDescription" placeholder="Nhập mô tả">
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel" id="cancelBtn">Hủy</button>
+            <button class="btn-save" id="saveBtn">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data storage
+    let locationGroups = [];
+    let editingIndex = -1;
+
+    // Toggle menu
+    document.querySelectorAll('.menu-title').forEach(title => {
+        title.addEventListener('click', () => {
+            const section = title.parentElement;
+            section.classList.toggle('active');
+        });
+    });
+
+    // Modal controls
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const addBtn = document.getElementById('addGroupBtn');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const saveAddBtn = document.getElementById('saveAddBtn');
+    const groupForm = document.getElementById('groupForm');
+
+    function openModal(isEdit = false, index = -1) {
+        modalOverlay.classList.add('active');
+        editingIndex = index;
+
+        if (isEdit && index >= 0) {
+            modalTitle.textContent = 'Sửa nhóm vị trí sử dụng';
+            const group = locationGroups[index];
+            document.getElementById('groupName').value = group.name;
+            document.getElementById('groupDescription').value = group.description;
+            saveAddBtn.style.display = 'none';
+        } else {
+            modalTitle.textContent = 'Thêm mới nhóm vị trí sử dụng';
+            groupForm.reset();
+            saveAddBtn.style.display = 'inline-block';
+        }
+    }
+
+    function closeModalFunc() {
+        modalOverlay.classList.remove('active');
+        editingIndex = -1;
+    }
+
+    addBtn.addEventListener('click', () => openModal());
+    closeModal.addEventListener('click', closeModalFunc);
+    cancelBtn.addEventListener('click', closeModalFunc);
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            closeModalFunc();
+        }
+    });
+
+    // Save group
+    function saveGroup(addNew = false) {
+        const name = document.getElementById('groupName').value.trim();
+        const description = document.getElementById('groupDescription').value.trim();
+
+        if (!name) {
+            alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+            return;
+        }
+
+        const group = {
+            name,
+            description: description || '-'
+        };
+
+        if (editingIndex >= 0) {
+            locationGroups[editingIndex] = group;
+        } else {
+            locationGroups.push(group);
+        }
+
+        renderTable();
+        updatePagination();
+
+        if (addNew) {
+            groupForm.reset();
+            editingIndex = -1;
+        } else {
+            closeModalFunc();
+        }
+    }
+
+    saveBtn.addEventListener('click', () => saveGroup(false));
+    saveAddBtn.addEventListener('click', () => saveGroup(true));
+
+    // Delete group
+    function deleteGroup(index) {
+        if (confirm('Bạn có chắc chắn muốn xóa nhóm này?')) {
+            locationGroups.splice(index, 1);
+            renderTable();
+            updatePagination();
+        }
+    }
+
+    // Render table
+    function renderTable() {
+        const tbody = document.querySelector('#dataTable tbody');
+
+        if (locationGroups.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📄</div>
+                            <div class="empty-state-text">Không có dữ liệu</div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = locationGroups.map((group, index) => `
+            <tr>
+                <td>${group.name}</td>
+                <td>${group.description}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-action" onclick="openModal(true, ${index})" title="Sửa">Sửa</button>
+                        <button class="btn-action btn-delete" onclick="deleteGroup(${index})" title="Xóa">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Update pagination info
+    function updatePagination() {
+        const total = locationGroups.length;
+        document.getElementById('totalRecords').textContent = total;
+        document.getElementById('fromRecord').textContent = total > 0 ? 1 : 0;
+        document.getElementById('toRecord').textContent = total;
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#dataTable tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Initialize
+    renderTable();
+    updatePagination();
+</script>
+</body>
+</html>

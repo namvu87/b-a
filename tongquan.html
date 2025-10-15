@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Đại Long - Sơ đồ Tổng thể</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1em;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab.active {
+            background: white;
+            color: #2a5298;
+            border-bottom: 3px solid #2a5298;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .architecture-diagram {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .layer {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .layer-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2a5298;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .module {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .module:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .module-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .module-desc {
+            font-size: 0.9em;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        .actor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .actor-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .actor-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .actor-role {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .actor-tasks {
+            list-style: none;
+        }
+
+        .actor-tasks li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.85em;
+        }
+
+        .actor-tasks li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .flow-number {
+            background: #2a5298;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .flow-content {
+            flex: 1;
+        }
+
+        .flow-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .flow-desc {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .integration-map {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .integration-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .integration-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 150px;
+            text-align: center;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .integration-arrow {
+            color: #2a5298;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .layer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .actor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏭 HỆ THỐNG ERP ĐẠI LONG</h1>
+        <p>Enterprise Resource Planning - Quản trị toàn diện doanh nghiệp sản xuất</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" onclick="showView('architecture')">Kiến trúc Hệ thống</button>
+        <button class="tab" onclick="showView('actors')">Người dùng</button>
+        <button class="tab" onclick="showView('production')">Quy trình Sản xuất</button>
+        <button class="tab" onclick="showView('integration')">Tích hợp Module</button>
+    </div>
+
+    <div class="content">
+        <!-- Architecture View -->
+        <div id="architecture" class="view active">
+            <h2 style="color: #1e3c72; margin-bottom: 20px;">Kiến trúc 3 tầng - Mini Apps</h2>
+
+            <div class="architecture-diagram">
+                <!-- Core Layer -->
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>🔷</span> CORE APP - Lõi Hệ thống
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">Tổ chức</div>
+                            <div class="module-desc">Quản lý Zone, Workshop, Line, Station</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">User & SSO</div>
+                            <div class="module-desc">Đăng nhập tập trung, quản lý người dùng</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">RBAC</div>
+                            <div class="module-desc">Phân quyền dựa trên vai trò</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Master Data</div>
+                            <div class="module-desc">Sản phẩm, Khách hàng, NCC, Tài sản</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Event Bus</div>
+                            <div class="module-desc">Message Broker, Pub/Sub</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini Apps Layer -->
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>📦</span> MINI APP 1 - Production (Ưu tiên)
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">MPS/PO</div>
+                            <div class="module-desc">Lập kế hoạch sản xuất</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Work Order</div>
+                            <div class="module-desc">Quản lý lệnh sản xuất</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Real-time Tracking</div>
+                            <div class="module-desc">Theo dõi sản lượng OK/NG</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Downtime</div>
+                            <div class="module-desc">Ghi nhận dừng máy</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Material Issue</div>
+                            <div class="module-desc">Xuất vật tư theo BOM</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">OEE Dashboard</div>
+                            <div class="module-desc">Hiệu suất thiết bị tổng thể</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>💰</span> MINI APP 2 - Finance & Accounting
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">General Ledger</div>
+                            <div class="module-desc">Sổ cái tổng hợp</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">E-Invoice</div>
+                            <div class="module-desc">Hóa đơn điện tử</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Cost Management</div>
+                            <div class="module-desc">Quản lý chi phí sản xuất</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Payment</div>
+                            <div class="module-desc">Thanh toán, đối soát ngân hàng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>👥</span> MINI APP 3 - Sales & Marketing (CRM)
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">Customer Management</div>
+                            <div class="module-desc">Quản lý khách hàng</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Sales Order</div>
+                            <div class="module-desc">Đơn bán hàng</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Campaign</div>
+                            <div class="module-desc">Chiến dịch Marketing</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Lead & Pipeline</div>
+                            <div class="module-desc">Quản lý cơ hội bán hàng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>🧑‍💼</span> MINI APP 4 - HRM
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">Employee Profile</div>
+                            <div class="module-desc">Hồ sơ nhân viên</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Shift & Attendance</div>
+                            <div class="module-desc">Ca làm việc, chấm công</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Payroll</div>
+                            <div class="module-desc">Tính lương, bảo hiểm</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Performance</div>
+                            <div class="module-desc">Đánh giá, KPI</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div class="layer-title">
+                        <span>📄</span> MINI APP 5 - Digital Office
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-title">Task & Workflow</div>
+                            <div class="module-desc">Quản lý công việc, quy trình</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">E-Sign</div>
+                            <div class="module-desc">Ký điện tử, hợp đồng</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Document</div>
+                            <div class="module-desc">Quản lý văn bản</div>
+                        </div>
+                        <div class="module">
+                            <div class="module-title">Internal Social</div>
+                            <div class="module-desc">Mạng xã hội nội bộ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actors View -->
+        <div id="actors" class="view">
+            <h2 style="color: #1e3c72; margin-bottom: 20px;">Các Nhóm Người dùng</h2>
+
+            <div class="actor-grid">
+                <div class="actor-card">
+                    <div class="actor-name">👨‍💼 Admin</div>
+                    <div class="actor-role">Quản trị viên hệ thống</div>
+                    <ul class="actor-tasks">
+                        <li>Quản lý tổ chức, phòng ban</li>
+                        <li>Cấu hình user & phân quyền</li>
+                        <li>Quản lý Master Data</li>
+                        <li>Cấu hình Event Bus</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">📊 Manager</div>
+                    <div class="actor-role">Giám đốc / Quản lý</div>
+                    <ul class="actor-tasks">
+                        <li>Xem Dashboard OEE</li>
+                        <li>Phê duyệt kế hoạch</li>
+                        <li>Xem báo cáo tài chính</li>
+                        <li>Đánh giá hiệu suất</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">📋 Planner</div>
+                    <div class="actor-role">Kế hoạch sản xuất</div>
+                    <ul class="actor-tasks">
+                        <li>Lập MPS</li>
+                        <li>Tạo Production Order</li>
+                        <li>Generate Work Orders</li>
+                        <li>Phân bổ nguồn lực</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">👷 Operator</div>
+                    <div class="actor-role">Công nhân sản xuất</div>
+                    <ul class="actor-tasks">
+                        <li>Start/Stop Work Order</li>
+                        <li>Report Qty OK/NG</li>
+                        <li>Ghi nhận Downtime</li>
+                        <li>Gọi Maintenance</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">👨‍🏭 Line Leader</div>
+                    <div class="actor-role">Tổ trưởng dây chuyền</div>
+                    <ul class="actor-tasks">
+                        <li>Gán WO cho Line/Shift</li>
+                        <li>Giám sát sản xuất</li>
+                        <li>Chốt WO hoàn thành</li>
+                        <li>Xử lý vấn đề chất lượng</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">🔧 Technician</div>
+                    <div class="actor-role">Kỹ thuật viên bảo trì</div>
+                    <ul class="actor-tasks">
+                        <li>Nhận MR (Maintenance Request)</li>
+                        <li>Thực hiện PM/CM</li>
+                        <li>Cập nhật trạng thái sửa chữa</li>
+                        <li>Quản lý phụ tùng</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">📦 Storekeeper</div>
+                    <div class="actor-role">Thủ kho</div>
+                    <ul class="actor-tasks">
+                        <li>Xuất vật tư theo BOM</li>
+                        <li>Quản lý nhập-xuất</li>
+                        <li>Kiểm soát tồn kho</li>
+                        <li>Đề xuất mua hàng</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">✅ QC Inspector</div>
+                    <div class="actor-role">Kiểm tra chất lượng</div>
+                    <ul class="actor-tasks">
+                        <li>Thực hiện IPQC</li>
+                        <li>Tạo NC (Non-Conformance)</li>
+                        <li>Phê duyệt chất lượng</li>
+                        <li>Báo cáo chất lượng</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">🛒 Purchaser</div>
+                    <div class="actor-role">Nhân viên mua hàng</div>
+                    <ul class="actor-tasks">
+                        <li>Tạo Purchase Request</li>
+                        <li>Tạo Purchase Order</li>
+                        <li>Theo dõi giao hàng</li>
+                        <li>Đánh giá nhà cung cấp</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">👤 HR Officer</div>
+                    <div class="actor-role">Nhân sự</div>
+                    <ul class="actor-tasks">
+                        <li>Quản lý hồ sơ nhân viên</li>
+                        <li>Quản lý ca làm việc</li>
+                        <li>Tính lương, bảo hiểm</li>
+                        <li>Đánh giá performance</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">💼 Sales</div>
+                    <div class="actor-role">Kinh doanh</div>
+                    <ul class="actor-tasks">
+                        <li>Quản lý khách hàng</li>
+                        <li>Tạo Sales Order</li>
+                        <li>Theo dõi đơn hàng</li>
+                        <li>Chăm sóc khách hàng</li>
+                    </ul>
+                </div>
+
+                <div class="actor-card">
+                    <div class="actor-name">📱 Employee</div>
+                    <div class="actor-role">Nhân viên nội bộ</div>
+                    <ul class="actor-tasks">
+                        <li>Quản lý công việc</li>
+                        <li>Quy trình phê duyệt</li>
+                        <li>Ký điện tử</li>
+                        <li>Mạng xã hội nội bộ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Production Flow -->
+        <div id="production" class="view">
+            <h2 style="color: #1e3c72; margin-bottom: 20px;">Quy trình Sản xuất Chi tiết</h2>
+
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Tạo Production Order (PO)</div>
+                        <div class="flow-desc">Planner lập kế hoạch sản xuất MPS, tạo Production Order từ Sales Order hoặc Forecast</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Generate Work Orders (WO)</div>
+                        <div class="flow-desc">Hệ thống tự động chia nhỏ PO thành các Work Order theo công đoạn và BOM</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Assign WO → Line/Shift</div>
+                        <div class="flow-desc">Line Leader gán WO cho dây chuyền và ca làm việc cụ thể</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Issue Materials (Xuất vật tư)</div>
+                        <div class="flow-desc">Storekeeper xuất vật tư theo BOM khi WO bắt đầu, cập nhật tồn kho</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">5</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Start Work Order</div>
+                        <div class="flow-desc">Operator bắt đầu WO, hệ thống ghi nhận thời gian và người thực hiện</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">6</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Real-time Production Tracking</div>
+                        <div class="flow-desc">Operator nhập sản lượng OK/NG theo thời gian thực, hệ thống tự động tính OEE</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">7</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Quality Check (IPQC)</div>
+                        <div class="flow-desc">QC Inspector kiểm tra chất lượng trong quá trình, tạo NC nếu phát hiện lỗi</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">8</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Downtime Management</div>
+                        <div class="flow-desc">Nếu dừng máy, Operator ghi nhận Downtime và tạo Maintenance Request (MR)</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">9</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Maintenance Response</div>
+                        <div class="flow-desc">Technician nhận MR, thực hiện sửa chữa (PM/CM), cập nhật trạng thái</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">10</div>
+                    <div class="flow-content">
+                        <div class="flow-title">Close Work Order</div>
+                        <div class="flow-desc">Line Leader chốt WO hoàn thành, hệ thống cập nhật tồn kho thành phẩm và chi phí</div>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-number">11</div>
+                    <div class="flow-content">
+                        <div class="flow-title">OEE Dashboard & Report</div>
+                        <div class="flow-desc">Manager xem báo cáo OEE, Availability, Performance, Quality theo thời gian thực</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration View -->
+        <div id="integration" class="view">
+            <h2 style="color: #1e3c72; margin-bottom: 20px;">Sơ đồ Tích hợp Module</h2>
+
+            <div class="integration-map">
+                <div class="integration-row">
+                    <div class="integration-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        CORE APP
+                    </div>
+                </div>
+
+                <div class="integration-arrow">↓
